@@ -5,6 +5,7 @@ let aciertos = 0;
 
 let errores = 0;
 let pregunta = 1;
+document.getElementById("barra").style.width = "10%";
 
 function nuevoNumero(){
 
@@ -34,6 +35,9 @@ document.getElementById("aciertos").textContent =
 if(pregunta < 10){
 
     pregunta++;
+    let porcentaje = (pregunta / 10) * 100;
+
+document.getElementById("barra").style.width = porcentaje + "%";
 
     document.getElementById("pregunta").textContent =
     "📘 Pregunta: " + pregunta + " de 10";
