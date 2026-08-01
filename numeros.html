@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MateSonidos - Números</title>
+
+
+
+</head>
+<link rel="stylesheet" href="css/estilos.css">
+
+<body>
+
+<header>
+
+<h1>🔢 MateSonidos</h1>
+
+<h2>Nivel 1 - Conozco los números</h2>
+
+</header>
+
+<main>
+<div class="tarjeta">
+<h2>¿Qué número es este?</h2>
+
+<div class="circulo">
+
+    <h1 id="numero"></h1>
+
+</div>
+<input
+id="respuesta"
+type="number"
+autocomplete="off">
+
+<br>
+
+<button onclick="hablar('¿Qué número es este? ' + numeroCorrecto)">
+🔊 Escuchar
+</button>
+
+<br><br>
+
+<button onclick="corregir()">
+Responder
+</button>
+
+<div id="resultado"></div>
+<hr>
+
+<p id="aciertos">⭐ Aciertos: 0</p>
+
+<p id="errores">❌ Errores: 0</p>
+<p id="pregunta">📘 Pregunta: 1 de 10</p>
+</div>
+</main>
+
+<script src="js/numeros.js"></script>
+
+</body>
+</html>

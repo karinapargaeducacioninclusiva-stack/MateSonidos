@@ -1,0 +1,104 @@
+
+.tarjeta{
+    max-width:550px;
+    margin:40px auto;
+    padding:30px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+    text-align:center;
+}
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f3f5f7;
+    margin:0;
+    text-align:center;
+}
+
+header{
+    background:#1565d8;
+    color:white;
+    padding:25px;
+}
+
+main{
+    padding:40px;
+}
+
+#numero{
+    font-size:90px;
+    font-weight:bold;
+    color:#1565d8;
+    margin:20px 0;
+}
+
+
+input{
+    width:140px;
+    height:60px;
+    font-size:34px;
+    text-align:center;
+    border:3px solid #1565d8;
+    border-radius:12px;
+}
+
+button{
+    width:240px;
+    padding:15px;
+    margin:10px auto;
+    display:block;
+    font-size:26px;
+    background:#1565d8;
+    color:white;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#0d47a1;
+    transform:scale(1.03);
+}
+#resultado{
+    margin-top:25px;
+    font-size:30px;
+    font-weight:bold;
+    min-height:40px;
+}
+.circulo{
+    width:170px;
+    height:170px;
+    border:6px solid #1565d8;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px auto;
+}
+.circulo{
+    width:170px;
+    height:170px;
+    background:#eef6ff;
+    border:6px solid #1565d8;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px auto;
+    animation: aparecer .3s;
+}
+
+@keyframes aparecer{
+
+    from{
+        transform:scale(0.8);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
