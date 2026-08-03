@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MateSonidos - Nivel 2</title>
+
+<link rel="stylesheet" href="css/estilos.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Nivel 2 - Ordena los números</h1>
+
+</header>
+
+<main>
+
+<div class="tarjeta">
+
+<h2>Ordena la secuencia</h2>
+
+<p>
+Escucha los números y escríbelos de menor a mayor.
+</p>
+
+<div id="secuencia"></div>
+<div id="respuestaTarjetas"></div>
+
+
+<br><br>
+
+<button onclick="repetir()">
+🔊 Escuchar
+</button>
+
+<br><br>
+
+<button onclick="comprobar()">
+Responder
+</button>
+
+<br><br>
+
+<div id="resultado"></div>
+
+<hr>
+
+<p id="aciertos">
+⭐ Aciertos: 0
+</p>
+
+<p id="errores">
+❌ Errores: 0
+</p>
+
+<p id="pregunta">
+📘 Pregunta 1 de 10
+</p>
+
+<div class="progreso">
+
+<div id="barra"></div>
+
+</div>
+
+</div>
+
+</main>
+
+<script src="js/voz.js"></script>
+<script src="js/guardar.js"></script>
+<script src="js/secuencias.js"></script>
+
+</body>
+</html>

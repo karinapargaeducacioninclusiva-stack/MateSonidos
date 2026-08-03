@@ -9,82 +9,94 @@
 
 <title>MateSonidos</title>
 
-<style>
-
-body{
-
-    margin:0;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f3f5f7;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-
-}
-
-.tarjeta{
-
-    background:white;
-    width:500px;
-    padding:50px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
-
-}
-
-h1{
-
-    color:#1565d8;
-    font-size:52px;
-
-}
-
-p{
-
-    font-size:24px;
-    color:#444;
-
-}
-
-button{
-
-    margin-top:35px;
-    padding:18px 45px;
-    font-size:28px;
-    background:#1565d8;
-    color:white;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-
-}
-
-button:hover{
-
-    background:#0f4cb5;
-
-}
-
-</style>
+<link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
 <body>
 
-<div class="tarjeta">
+<header>
 
-    <h1>🎵 MateSonidos</h1>
+<h1>🎵 MateSonidos</h1>
 
-    <h2>Aprender matemáticas escuchando</h2>
+<p>Aprender matemática con sonidos y accesibilidad</p>
 
-    <button onclick="location.href='numeros.html'">
-        ▶ Comenzar
-    </button>
+</header>
+
+<main>
+
+<div class="menu">
+
+<h2 id="ultimoNivel">
+Último nivel jugado: Nivel 1
+</h2>
+
+<br>
+
+<button onclick="continuar()">
+
+▶ Continuar
+
+</button>
+
+<br><br>
+
+<div class="nivel">
+
+<h2>🟦 Nivel 1</h2>
+
+<p>Conozco los números</p>
+
+<button onclick="location.href='numeros.html'">
+
+▶ Jugar
+
+</button>
 
 </div>
 
-</body>
+<div class="nivel">
 
+<h2>🟩 Nivel 2</h2>
+
+<p>Ordena los números</p>
+
+<button onclick="location.href='secuencias.html'">
+
+▶ Jugar
+
+</button>
+
+</div>
+
+<div class="nivel bloqueado">
+
+<h2>🟨 Nivel 3</h2>
+
+<p>Próximamente</p>
+
+<button disabled>
+
+🔒
+
+</button>
+<div class="nivel bloqueado">
+
+<h2>🟧 Nivel 4</h2>
+
+<p>Próximamente</p>
+
+<button disabled>
+
+🔒
+
+</button>
+</div>
+
+</main>
+
+<script src="js/guardar.js"></script>
+<script src="js/app.js"></script>
+
+</body>
 </html>
