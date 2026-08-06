@@ -1,14 +1,17 @@
 // =====================================
 // MateSonidos
-// Navegación accesible del menú
+// Menú accesible
 // =====================================
 
 document.addEventListener("DOMContentLoaded", iniciarMenu);
-console.log("menu.js cargado");
+
 let botones = [];
 let opcion = 0;
+let bienvenidaDicha = false;
 
 function iniciarMenu() {
+
+    console.log("menu.js cargado");
 
     botones = [
 
@@ -20,17 +23,27 @@ function iniciarMenu() {
         {
             elemento: document.querySelector("button[onclick=\"location.href='secuencias.html'\"]"),
             texto: "Nivel 2. Ordena los números."
+        },
+
+        {
+            elemento: document.querySelector("button[onclick='continuar()']"),
+            texto: "Continuar el último nivel jugado."
         }
 
     ];
 
-    seleccionar(0);
+    // Elimina botones inexistentes
+    botones = botones.filter(function(b){
+        return b.elemento != null;
+    });
 
-    setTimeout(function () {
+    if(botones.length == 0){
+        return;
+    }
 
-        hablar("Bienvenido a MateSonidos.");
+    opcion = 0;
 
-    },500);
+    botones[0].elemento.classList.add("menuActivo");
 
 }
 
@@ -40,61 +53,58 @@ function hablar(texto){
 
     const voz = new SpeechSynthesisUtterance(texto);
 
-    voz.lang="es-ES";
-
-    voz.rate=0.75;
+    voz.lang = "es-ES";
+    voz.rate = 0.65;
 
     speechSynthesis.speak(voz);
 
 }
 
-function seleccionar(indice){
+document.addEventListener("keydown", function(e){
 
-    botones.forEach(function(b){
+    // Primera interacción del usuario
+    if(!bienvenidaDicha){
 
-        b.elemento.classList.remove("menuActivo");
+        bienvenidaDicha = true;
 
-    });
+        hablar("Bienvenido a MateSonidos. Usa las flechas arriba y abajo para elegir un nivel. Presiona Enter para comenzar.");
 
-    opcion = indice;
+        return;
+    }
 
-    botones[opcion].elemento.classList.add("menuActivo");
+    if(e.key == "ArrowDown"){
 
-    hablar(botones[opcion].texto);
+        botones[opcion].elemento.classList.remove("menuActivo");
 
-}
+        opcion++;
 
-document.addEventListener("keydown",function(e){
-
-    if(e.key=="ArrowDown"){
-
-        let nuevo = opcion + 1;
-
-        if(nuevo>=botones.length){
-
-            nuevo=0;
-
+        if(opcion >= botones.length){
+            opcion = 0;
         }
 
-        seleccionar(nuevo);
+        botones[opcion].elemento.classList.add("menuActivo");
+
+        hablar(botones[opcion].texto);
 
     }
 
-    if(e.key=="ArrowUp"){
+    if(e.key == "ArrowUp"){
 
-        let nuevo = opcion - 1;
+        botones[opcion].elemento.classList.remove("menuActivo");
 
-        if(nuevo<0){
+        opcion--;
 
-            nuevo=botones.length-1;
-
+        if(opcion < 0){
+            opcion = botones.length - 1;
         }
 
-        seleccionar(nuevo);
+        botones[opcion].elemento.classList.add("menuActivo");
+
+        hablar(botones[opcion].texto);
 
     }
 
-    if(e.key=="Enter"){
+    if(e.key == "Enter"){
 
         botones[opcion].elemento.click();
 
