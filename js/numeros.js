@@ -13,13 +13,16 @@ let errores = 0;
 // Voz
 // -------------------------------
 function hablar(texto) {
+
     speechSynthesis.cancel();
 
     const voz = new SpeechSynthesisUtterance(texto);
+
     voz.lang = "es-ES";
-    voz.rate = 0.9;
+    voz.rate = 0.75;
 
     speechSynthesis.speak(voz);
+
 }
 
 // -------------------------------
@@ -36,13 +39,25 @@ function nuevoNumero() {
     const circulo = document.querySelector(".circulo");
 
     if (circulo) {
+
         circulo.style.animation = "none";
         circulo.offsetHeight;
         circulo.style.animation = "aparecer .3s";
+
     }
 
     document.getElementById("respuesta").value = "";
     document.getElementById("respuesta").focus();
+
+}
+
+// -------------------------------
+// Repetir consigna
+// -------------------------------
+function repetir(){
+
+    hablar("¿Qué número es este? " + numeroCorrecto);
+
 }
 
 // -------------------------------
@@ -52,10 +67,11 @@ function actualizarBarra() {
 
     let porcentaje = (pregunta / 10) * 100;
 
-    document.getElementById("barra").style.width = porcentaje + "%";
+    document.getElementById("barra").style.width =
+        porcentaje + "%";
 
     document.getElementById("pregunta").textContent =
-        "📘 Pregunta: " + pregunta + " de 10";
+        "📘 Pregunta " + pregunta + " de 10";
 
 }
 
@@ -69,16 +85,25 @@ function terminarJuego() {
     let mensaje = "";
 
     if (aciertos == 10) {
+
         mensaje = "🏆 ¡Excelente trabajo!";
+
     } else if (aciertos >= 8) {
+
         mensaje = "🌟 ¡Muy bien!";
+
     } else if (aciertos >= 6) {
+
         mensaje = "👍 ¡Buen trabajo! Sigue practicando.";
+
     } else {
+
         mensaje = "💪 ¡No te rindas! Cada intento te ayuda a aprender.";
+
     }
 
     document.querySelector("main").innerHTML = `
+
 <h1>🎉 ¡Felicitaciones!</h1>
 
 <h2>Terminaste el Nivel 1</h2>
@@ -98,8 +123,9 @@ function terminarJuego() {
 <br><br>
 
 <button onclick="window.location='index.html'">
-🏠 Volver al inicio
+🏠 Volver al menú principal
 </button>
+
 `;
 
 }
@@ -112,12 +138,16 @@ function corregir() {
     let respuesta = document.getElementById("respuesta").value.trim();
 
     if (respuesta == "") {
+
+        hablar("Escribe un número.");
+
         return;
+
     }
 
-    if (respuesta == numeroCorrecto) {
+    if (Number(respuesta) === numeroCorrecto) {
 
-        hablar("Correcto");
+        hablar("Correcto.");
 
         document.getElementById("resultado").textContent =
             "✅ ¡Correcto!";
@@ -129,7 +159,7 @@ function corregir() {
 
     } else {
 
-        hablar("Incorrecto");
+        hablar("Incorrecto.");
 
         document.getElementById("resultado").textContent =
             "❌ Incorrecto";
@@ -141,9 +171,10 @@ function corregir() {
 
     }
 
-    if (pregunta == 10) {
+    if (pregunta >= 10) {
 
-        setTimeout(terminarJuego, 1000);
+        setTimeout(terminarJuego,1000);
+
         return;
 
     }
@@ -152,41 +183,34 @@ function corregir() {
 
     actualizarBarra();
 
-    setTimeout(function () {
+    guardarDato("ultimoNivel",1);
 
-        document.getElementById("resultado").textContent = "";
+    setTimeout(function(){
+
+        document.getElementById("resultado").textContent="";
 
         nuevoNumero();
-        guardarDato("ultimoNivel", 1);
 
-    }, 1000);
+    },1000);
 
 }
 
 // -------------------------------
 // Eventos
 // -------------------------------
+document.getElementById("respuesta").addEventListener("keydown",function(e){
 
-document.getElementById("respuesta").addEventListener("keydown", function (e) {
+    if(e.key==="Enter"){
 
-    if (e.key === "Enter") {
         corregir();
+
     }
 
 });
 
-document.getElementById("respuesta").focus();
-
 // -------------------------------
-// Inicio
-// -------------------------------
-
-actualizarBarra();
-nuevoNumero();
-// ----------------------------
 // Volver al menú
-// ----------------------------
-
+// -------------------------------
 function volverMenu(){
 
     const salir = confirm(
@@ -200,3 +224,10 @@ function volverMenu(){
     }
 
 }
+
+// -------------------------------
+// Inicio
+// -------------------------------
+actualizarBarra();
+nuevoNumero();
+document.getElementById("respuesta").focus();
