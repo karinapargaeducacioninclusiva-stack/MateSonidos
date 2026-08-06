@@ -183,3 +183,20 @@ document.getElementById("respuesta").focus();
 
 actualizarBarra();
 nuevoNumero();
+// ----------------------------
+// Volver al menú
+// ----------------------------
+
+function volverMenu(){
+
+    const salir = confirm(
+        "¿Desea volver al menú principal?\n\nSe perderá el progreso de esta partida."
+    );
+
+    if(salir){
+
+        window.location.href = "index.html";
+
+    }
+
+}

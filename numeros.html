@@ -1,68 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MateSonidos - Números</title>
+    <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>MateSonidos - Nivel 1</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
 
 </head>
-<link rel="stylesheet" href="css/estilos.css">
 
 <body>
 
 <header>
 
-<h1>🔢 MateSonidos</h1>
+    <h1>🟦 Nivel 1</h1>
 
-<h2>Nivel 1 - Conozco los números</h2>
+    <p>Conozco los números</p>
 
 </header>
 
 <main>
-<div class="tarjeta">
-<h2>¿Qué número es este?</h2>
 
-<div class="circulo">
+    <div class="juego">
 
-    <h1 id="numero"></h1>
+        <h2 id="pregunta">
+            📘 Pregunta 1 de 10
+        </h2>
 
-</div>
-<input
-id="respuesta"
-type="number"
-autocomplete="off">
+        <br>
 
-<br>
+        <button onclick="repetir()">
+            🔊 Escuchar nuevamente
+        </button>
 
-<button onclick="hablar('¿Qué número es este? ' + numeroCorrecto)">
-🔊 Escuchar
-</button>
+        <br><br>
 
-<br><br>
+        <div id="numero" class="numeroGrande"></div>
 
-<button onclick="corregir()">
-Responder
-</button>
+        <br>
 
-<div id="resultado"></div>
-<div class="progreso">
-    <div id="barra"></div>
-</div>
-<hr>
+        <input
+            type="number"
+            id="respuesta"
+            placeholder="Escribe el número">
 
-<p id="aciertos">⭐ Aciertos: 0</p>
+        <br><br>
 
-<p id="errores">❌ Errores: 0</p>
-<p id="pregunta">📘 Pregunta: 1 de 10</p>
-</div>
+        <button onclick="comprobar()">
+            ✅ Responder
+        </button>
+
+        <br><br>
+
+        <div id="resultado"></div>
+
+        <hr>
+
+        <p id="aciertos">
+            ⭐ Aciertos: 0
+        </p>
+
+        <p id="errores">
+            ❌ Errores: 0
+        </p>
+
+        <div class="progreso">
+
+            <div id="barra"></div>
+
+        </div>
+
+        <br><br>
+
+        <button onclick="volverMenu()">
+            🏠 Volver al menú principal
+        </button>
+
+    </div>
+
 </main>
 
-<script src="js/voz.js"></script>
 <script src="js/guardar.js"></script>
 <script src="js/numeros.js"></script>
 
 </body>
+
 </html>
