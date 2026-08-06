@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>MateSonidos - Nivel 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/estilos.css">
+    <title>MateSonidos - Nivel 2</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
@@ -15,67 +17,78 @@
 
 <header>
 
-<h1>Nivel 2 - Ordena los números</h1>
+    <h1>🟩 Nivel 2</h1>
+
+    <p>Ordena los números</p>
 
 </header>
 
 <main>
 
-<div class="tarjeta">
+<div class="juego">
 
-<h2>Ordena la secuencia</h2>
+    <h2 id="pregunta">
+        📘 Pregunta 1 de 10
+    </h2>
 
-<p>
-Escucha los números y escríbelos de menor a mayor.
-</p>
+    <br>
 
-<div id="secuencia"></div>
-<div id="respuestaTarjetas"></div>
+    <button onclick="repetir()">
+        🔊 Escuchar nuevamente
+    </button>
 
+    <br><br>
 
-<br><br>
+    <div id="numeros" class="numeroGrande"></div>
+<p id="consigna" class="consigna"></p>
+    <br>
 
-<button onclick="repetir()">
-🔊 Escuchar
-</button>
+<p>Escribe la respuesta separando los números con espacios.</p>
+    <input
+        type="text"
+        id="respuesta"
+        placeholder="Ejemplo: 2 5 8">
 
-<br><br>
+    <br><br>
 
-<button onclick="comprobar()">
-Responder
-</button>
+    <button onclick="corregir()">
+        ✅ Comprobar
+    </button>
 
-<br><br>
+    <br><br>
 
-<div id="resultado"></div>
+    <div id="resultado"></div>
 
-<hr>
+    <hr>
 
-<p id="aciertos">
-⭐ Aciertos: 0
-</p>
+    <p id="aciertos">
+        ⭐ Aciertos: 0
+    </p>
 
-<p id="errores">
-❌ Errores: 0
-</p>
+    <p id="errores">
+        ❌ Errores: 0
+    </p>
 
-<p id="pregunta">
-📘 Pregunta 1 de 10
-</p>
+    <div class="progreso">
 
-<div class="progreso">
+        <div id="barra"></div>
 
-<div id="barra"></div>
+    </div>
 
-</div>
+    <br><br>
+
+    <button onclick="volverMenu()">
+        🏠 Volver al menú principal
+    </button>
 
 </div>
 
 </main>
 
-<script src="js/voz.js"></script>
 <script src="js/guardar.js"></script>
+<script src="js/voz.js"></script>
 <script src="js/secuencias.js"></script>
 
 </body>
+
 </html>

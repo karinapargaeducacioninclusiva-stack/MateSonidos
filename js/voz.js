@@ -1,39 +1,70 @@
-// =========================
-// Sistema de voz MateSonidos
-// =========================
+// ======================================
+// MateSonidos
+// Sistema de voz
+// ======================================
 
-let vozActiva = true;
+let colaVoz = [];
+let hablando = false;
+
+// -------------------------------
+// Hablar
+// -------------------------------
 
 function hablar(texto){
 
-    if(!vozActiva) return;
+    colaVoz.push(texto);
 
-    speechSynthesis.cancel();
+    if(!hablando){
 
-    const voz = new SpeechSynthesisUtterance(texto);
+        siguienteMensaje();
+
+    }
+
+}
+
+// -------------------------------
+// Leer siguiente mensaje
+// -------------------------------
+
+function siguienteMensaje(){
+
+    if(colaVoz.length === 0){
+
+        hablando = false;
+        return;
+
+    }
+
+    hablando = true;
+
+    const mensaje = colaVoz.shift();
+
+    const voz = new SpeechSynthesisUtterance(mensaje);
 
     voz.lang = "es-ES";
+    voz.rate = 0.75;
+    voz.pitch = 1;
 
-voz.rate = 0.7;
+    voz.onend = function(){
+
+        siguienteMensaje();
+
+    };
 
     speechSynthesis.speak(voz);
 
 }
 
-function activarVoz(){
+// -------------------------------
+// Limpiar voz
+// -------------------------------
 
-    vozActiva = true;
+function limpiarVoz(){
 
-}
+    speechSynthesis.cancel();
 
-function desactivarVoz(){
+    colaVoz = [];
 
-    vozActiva = false;
-
-}
-
-function cambiarVelocidad(valor){
-
-    window.velocidadVoz = valor;
+    hablando = false;
 
 }

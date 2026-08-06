@@ -1,193 +1,181 @@
-// =========================
-// MateSonidos
-// Nivel 2 - Ordenar secuencias
-// =========================
+// ======================================
+// MateSonidos - Nivel 2
+// Ordena los números
+// ======================================
 
+// Variables
+
+let numeros = [];
+let ordenCorrecto = [];
+let modoOrden = "";
 let pregunta = 1;
 let aciertos = 0;
 let errores = 0;
 
-let numeros = [];
-let respuestaCorrecta = [];
+// -------------------------------
+// Nueva secuencia
+// -------------------------------
 
-let seleccionada = null;
-let tarjetaSeleccionada = null;
-let indiceSeleccionado = 0;
-//----------------------------
-// Generar nueva secuencia
-//----------------------------
-
-function nuevaSecuencia() {
-
-    seleccionada = null;
-    tarjetaSeleccionada = null;
+function nuevaSecuencia(){
 
     numeros = [];
 
-    while (numeros.length < 3) {
+    while(numeros.length < 3){
 
-        let n = Math.floor(Math.random() * 9) + 1;
+        const n = Math.floor(Math.random()*9)+1;
 
-        if (!numeros.includes(n)) {
+        if(!numeros.includes(n)){
+
             numeros.push(n);
+
         }
 
     }
 
-    respuestaCorrecta = [...numeros].sort((a, b) => a - b);
+    // Elegir el modo aleatoriamente
+    if(Math.random() < 0.5){
 
-    dibujarTarjetas();
+        modoOrden = "menor";
 
-    actualizarBarra();
+        ordenCorrecto = [...numeros].sort((a,b)=>a-b);
+
+    }else{
+
+        modoOrden = "mayor";
+
+        ordenCorrecto = [...numeros].sort((a,b)=>b-a);
+
+    }
+
+    document.getElementById("numeros").textContent =
+        numeros.join(" - ");
+
+    document.getElementById("respuesta").value = "";
+
+    document.getElementById("respuesta").focus();
+
+    // Mostrar la consigna en pantalla
+    document.getElementById("consigna").textContent =
+        (modoOrden === "menor")
+        ? "📌 Ordena de menor a mayor"
+        : "📌 Ordena de mayor a menor";
+
+    repetir();
 
 }
 
-//----------------------------
-// Dibujar tarjetas
-//----------------------------
+// -------------------------------
+// Leer nuevamente
+// -------------------------------
 
-function dibujarTarjetas() {
+function repetir(){
 
-    const contenedor = document.getElementById("secuencia");
-    const respuesta = document.getElementById("respuestaTarjetas");
+    limpiarVoz();
 
-    contenedor.innerHTML = "";
-    respuesta.innerHTML = "";
-    indiceSeleccionado = 0;
-seleccionada = null;
-tarjetaSeleccionada = null;
+    hablar("Escucha atentamente.");
 
-numeros.forEach((numero, indice) => {
-        const tarjeta = document.createElement("button");
+    hablar("Primer número.");
+    hablar(numeros[0].toString());
 
-        tarjeta.className = "tarjetaNumero";
+    hablar("Segundo número.");
+    hablar(numeros[1].toString());
 
-        tarjeta.textContent = numero;
-        tarjeta.dataset.indice = indice;
+    hablar("Tercer número.");
+    hablar(numeros[2].toString());
 
-        tarjeta.onclick = function () {
+    if(modoOrden==="menor"){
 
-            seleccionada = numero;
-            tarjetaSeleccionada = tarjeta;
+        hablar("Ahora escribe los números ordenados de menor a mayor, separados por espacios.");
 
-seleccionarTarjeta(indice);
-        };
+    }else{
 
-        contenedor.appendChild(tarjeta);
-    });
+        hablar("Ahora escribe los números ordenados de mayor a menor, separados por espacios.");
 
-    for (let i = 0; i < 3; i++) {
+    }
 
-        const casilla = document.createElement("button");
+}
+// -------------------------------
+// Barra
+// -------------------------------
 
-        casilla.className = "casilla";
-casilla.onclick = function () {
+function actualizarBarra(){
 
-    // Si la casilla ya tiene un número, lo devuelve
-    if (casilla.textContent != "") {
+    document.getElementById("pregunta").textContent =
+        "📘 Pregunta " + pregunta + " de 10";
 
-        let numeroDevuelto = casilla.textContent;
+    document.getElementById("barra").style.width =
+        (pregunta*10) + "%";
 
-        document.querySelectorAll(".tarjetaNumero").forEach(tarjeta => {
+}
 
-            if (tarjeta.textContent == numeroDevuelto) {
+// -------------------------------
+// Corregir
+// -------------------------------
 
-                tarjeta.style.visibility = "visible";
+function corregir(){
+
+    const respuesta = document
+        .getElementById("respuesta")
+        .value
+        .trim();
+
+    if(respuesta===""){
+
+        limpiarVoz();
+
+        hablar("Debes escribir tres números.");
+
+        return;
+
+    }
+
+    const usuario = respuesta
+        .split(/\s+/)
+        .map(Number);
+
+    let correcto = true;
+
+    if(usuario.length !== 3){
+
+        correcto = false;
+
+    }else{
+
+        for(let i=0;i<3;i++){
+
+            if(usuario[i] !== ordenCorrecto[i]){
+
+                correcto = false;
+                break;
 
             }
 
-        });
-
-        casilla.textContent = "";
-
-        hablar("Número quitado.");
-
-        return;
-      
-    }
-
-    // Si no hay un número seleccionado
-    if (seleccionada == null) {
-
-        hablar("Primero selecciona un número.");
-
-        return;
-
-    }
-
-    // Coloca el número en la casilla
-    casilla.textContent = seleccionada;
-
-    tarjetaSeleccionada.style.visibility = "hidden";
-
-    hablar(seleccionada + " colocado.");
-
-    seleccionada = null;
-    tarjetaSeleccionada = null;
-
-};
-        respuesta.appendChild(casilla);
-
-    }
-seleccionarTarjeta(0);
-}
-
-//----------------------------
-// Escuchar
-//----------------------------
-
-function repetir() {
-
-    hablar("Ordena los números: " + numeros.join(", "));
-
-}
-
-//----------------------------
-// Comprobar
-//----------------------------
-
-function comprobar() {
-
-    let respuestaUsuario = [];
-
-    document.querySelectorAll(".casilla").forEach(c => {
-
-        respuestaUsuario.push(Number(c.textContent));
-
-    });
-
-    let correcta = true;
-
-    for (let i = 0; i < respuestaCorrecta.length; i++) {
-
-        if (respuestaUsuario[i] !== respuestaCorrecta[i]) {
-
-            correcta = false;
-
         }
 
     }
 
-    if (correcta) {
+    if(correcto){
 
-        hablar("Correcto");
+        limpiarVoz();
+
+        hablar("Muy bien. Respuesta correcta.");
 
         document.getElementById("resultado").textContent =
-            "✅ ¡Muy bien!";
+            "✅ Correcto";
 
         aciertos++;
 
         document.getElementById("aciertos").textContent =
             "⭐ Aciertos: " + aciertos;
 
-        siguientePregunta();
+    }else{
 
-    } else {
+        limpiarVoz();
 
-        hablar("Incorrecto");
+        hablar("Incorrecto. Intenta nuevamente.");
 
         document.getElementById("resultado").textContent =
-            "❌ Intenta nuevamente.";
+            "❌ Incorrecto";
 
         errores++;
 
@@ -196,18 +184,9 @@ function comprobar() {
 
     }
 
-}
+    if(pregunta >= 10){
 
-//----------------------------
-// Siguiente pregunta
-//----------------------------
-
-function siguientePregunta() {
-
-    if (pregunta >= 10) {
-
-        finalizar();
-
+        terminarJuego();
         return;
 
     }
@@ -216,160 +195,92 @@ function siguientePregunta() {
 
     actualizarBarra();
 
-    setTimeout(function () {
+    guardarDato("ultimoNivel",2);
+
+    setTimeout(function(){
 
         document.getElementById("resultado").textContent = "";
 
         nuevaSecuencia();
-        guardarDato("ultimoNivel", 2);
 
-    }, 1000);
-
-}
-
-//----------------------------
-// Barra
-//----------------------------
-
-function actualizarBarra() {
-
-    document.getElementById("pregunta").textContent =
-        "📘 Pregunta " + pregunta + " de 10";
-
-    document.getElementById("barra").style.width =
-        (pregunta / 10) * 100 + "%";
+    },1500);
 
 }
 
-//----------------------------
+// -------------------------------
 // Final
-//----------------------------
+// -------------------------------
 
-function finalizar() {
+function terminarJuego(){
+
+    limpiarVoz();
 
     hablar("Felicitaciones. Terminaste el nivel.");
 
     document.querySelector("main").innerHTML = `
-        <h1>🎉 ¡Felicitaciones!</h1>
 
-        <h2>Terminaste el Nivel 2</h2>
+<h1>🎉 ¡Felicitaciones!</h1>
 
-        <p>⭐ Aciertos: ${aciertos}</p>
+<h2>Terminaste el Nivel 2</h2>
 
-        <p>❌ Errores: ${errores}</p>
+<p>⭐ Aciertos: ${aciertos}</p>
 
-        <button onclick="location.reload()">
-            🔄 Jugar otra vez
-        </button>
+<p>❌ Errores: ${errores}</p>
 
-        <br><br>
+<br>
 
-        <button onclick="window.location='index.html'">
-            🏠 Volver al inicio
-        </button>
-    `;
+<button onclick="location.reload()">
+🔄 Jugar otra vez
+</button>
+
+<br><br>
+
+<button onclick="window.location='index.html'">
+🏠 Volver al menú principal
+</button>
+
+`;
+
+}
+
+// -------------------------------
+// Volver
+// -------------------------------
+
+function volverMenu(){
+
+    const salir = confirm(
+        "¿Desea volver al menú principal?\n\nSe perderá el progreso de esta partida."
+    );
+
+    if(salir){
+
+        limpiarVoz();
+
+        window.location.href = "index.html";
+
+    }
 
 }
 
-//----------------------------
-// Voz
-//----------------------------
+// -------------------------------
+// Enter
+// -------------------------------
 
-function hablar(texto) {
+document.getElementById("respuesta").addEventListener("keydown",function(e){
 
-    const voz = new SpeechSynthesisUtterance(texto);
+    if(e.key==="Enter"){
 
-    voz.lang = "es-ES";
+        corregir();
 
-    voz.rate = 0.9;
+    }
 
-    speechSynthesis.cancel();
+});
 
-    speechSynthesis.speak(voz);
-
-}
-function seleccionarTarjeta(indice){
-
-    const tarjetas = document.querySelectorAll(".tarjetaNumero");
-
-    tarjetas.forEach(function(tarjeta){
-
-        tarjeta.classList.remove("activa");
-
-    });
-
-    tarjetas[indice].classList.add("activa");
-
-    indiceSeleccionado = indice;
-tarjetaSeleccionada = tarjetas[indice];
-seleccionada = Number(tarjetas[indice].textContent);
-    hablar(tarjetas[indice].textContent);
-
-}
-//----------------------------
+// -------------------------------
 // Inicio
-//----------------------------
+// -------------------------------
+
+actualizarBarra();
 
 nuevaSecuencia();
-document.addEventListener("keydown", function(e){
-
-    const tarjetas = document.querySelectorAll(".tarjetaNumero");
-
-    if(e.key === "ArrowRight"){
-
-        let nuevo = indiceSeleccionado + 1;
-
-        if(nuevo >= tarjetas.length){
-
-            nuevo = 0;
-
-        }
-
-        seleccionarTarjeta(nuevo);
-
-    }
-
-    if(e.key === "ArrowLeft"){
-
-        let nuevo = indiceSeleccionado - 1;
-
-        if(nuevo < 0){
-
-            nuevo = tarjetas.length - 1;
-
-        }
-
-        seleccionarTarjeta(nuevo);
-
-    }
-
-});
-document.addEventListener("keydown", function(e){
-
-    if(e.key !== "Enter") return;
-
-    if(seleccionada == null){
-
-        hablar("Primero selecciona un número.");
-
-        return;
-
-    }
-
-    const casillas = document.querySelectorAll(".casilla");
-
-    for(let casilla of casillas){
-
-        if(casilla.textContent === ""){
-
-            casilla.click();
-
-            return;
-
-        }
-
-    }
-
-    hablar("Todas las posiciones están ocupadas.");
-
-});
