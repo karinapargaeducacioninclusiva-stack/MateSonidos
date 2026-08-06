@@ -31,67 +31,37 @@
             Último nivel jugado: Nivel 1
         </h2>
 
-        <br>
+        <nav id="menuPrincipal">
 
-        <button onclick="continuar()">
-            ▶ Continuar
-        </button>
-
-        <br><br>
-
-        <div class="nivel">
-
-            <h2>🟦 Nivel 1</h2>
-
-            <p>Conozco los números</p>
-
-            <button onclick="location.href='numeros.html'">
-                ▶ Jugar
+            <button id="continuar">
+                ▶ Continuar
             </button>
 
-        </div>
-
-        <br>
-
-        <div class="nivel">
-
-            <h2>🟩 Nivel 2</h2>
-
-            <p>Ordena los números</p>
-
-            <button onclick="location.href='secuencias.html'">
-                ▶ Jugar
+            <button id="nivel1">
+                🟦 Nivel 1 · Conozco los números
             </button>
 
-        </div>
-
-        <br>
-
-        <div class="nivel bloqueado">
-
-            <h2>🟨 Nivel 3</h2>
-
-            <p>Próximamente</p>
-
-            <button disabled>
-                🔒
+            <button id="nivel2">
+                🟩 Nivel 2 · Ordena los números
             </button>
 
-        </div>
-
-        <br>
-
-        <div class="nivel bloqueado">
-
-            <h2>🟧 Nivel 4</h2>
-
-            <p>Próximamente</p>
-
-            <button disabled>
-                🔒
+            <button id="configuracion">
+                ⚙ Configuración
             </button>
 
-        </div>
+            <button id="ayuda">
+                ❓ Ayuda
+            </button>
+
+        </nav>
+
+        <p class="ayudaTeclado">
+
+            ↑ ↓ Moverse &nbsp;&nbsp;
+            Enter Seleccionar &nbsp;&nbsp;
+            Espacio Repetir
+
+        </p>
 
     </div>
 

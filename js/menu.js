@@ -1,49 +1,58 @@
 // =====================================
 // MateSonidos
-// Menú accesible
+// Menú accesible 2.0
 // =====================================
 
 document.addEventListener("DOMContentLoaded", iniciarMenu);
 
-let botones = [];
 let opcion = 0;
-let bienvenidaDicha = false;
+
+const opciones = [
+    {
+        id: "continuar",
+        texto: "Continuar el último nivel jugado.",
+        accion: continuar
+    },
+    {
+        id: "nivel1",
+        texto: "Nivel 1. Conozco los números.",
+        accion: function () {
+            location.href = "numeros.html";
+        }
+    },
+    {
+        id: "nivel2",
+        texto: "Nivel 2. Ordena los números.",
+        accion: function () {
+            location.href = "secuencias.html";
+        }
+    },
+    {
+        id: "configuracion",
+        texto: "Configuración. Próximamente."
+    },
+    {
+        id: "ayuda",
+        texto: "Ayuda. Próximamente."
+    }
+];
 
 function iniciarMenu() {
 
-    console.log("menu.js cargado");
+    actualizarSeleccion();
 
-    botones = [
+}
 
-        {
-            elemento: document.querySelector("button[onclick=\"location.href='numeros.html'\"]"),
-            texto: "Nivel 1. Conozco los números."
-        },
+function actualizarSeleccion() {
 
-        {
-            elemento: document.querySelector("button[onclick=\"location.href='secuencias.html'\"]"),
-            texto: "Nivel 2. Ordena los números."
-        },
+    opciones.forEach(function(op){
 
-        {
-            elemento: document.querySelector("button[onclick='continuar()']"),
-            texto: "Continuar el último nivel jugado."
-        }
+        document.getElementById(op.id).classList.remove("menuActivo");
 
-    ];
-
-    // Elimina botones inexistentes
-    botones = botones.filter(function(b){
-        return b.elemento != null;
     });
 
-    if(botones.length == 0){
-        return;
-    }
-
-    opcion = 0;
-
-    botones[0].elemento.classList.add("menuActivo");
+    document.getElementById(opciones[opcion].id)
+        .classList.add("menuActivo");
 
 }
 
@@ -54,7 +63,7 @@ function hablar(texto){
     const voz = new SpeechSynthesisUtterance(texto);
 
     voz.lang = "es-ES";
-    voz.rate = 0.65;
+    voz.rate = 0.70;
 
     speechSynthesis.speak(voz);
 
@@ -62,51 +71,53 @@ function hablar(texto){
 
 document.addEventListener("keydown", function(e){
 
-    // Primera interacción del usuario
-    if(!bienvenidaDicha){
-
-        bienvenidaDicha = true;
-
-        hablar("Bienvenido a MateSonidos. Usa las flechas arriba y abajo para elegir un nivel. Presiona Enter para comenzar.");
-
-        return;
-    }
-
-    if(e.key == "ArrowDown"){
-
-        botones[opcion].elemento.classList.remove("menuActivo");
+    if(e.key === "ArrowDown"){
 
         opcion++;
 
-        if(opcion >= botones.length){
+        if(opcion >= opciones.length){
+
             opcion = 0;
+
         }
 
-        botones[opcion].elemento.classList.add("menuActivo");
+        actualizarSeleccion();
 
-        hablar(botones[opcion].texto);
+        hablar(opciones[opcion].texto);
 
     }
 
-    if(e.key == "ArrowUp"){
-
-        botones[opcion].elemento.classList.remove("menuActivo");
+    if(e.key === "ArrowUp"){
 
         opcion--;
 
         if(opcion < 0){
-            opcion = botones.length - 1;
+
+            opcion = opciones.length - 1;
+
         }
 
-        botones[opcion].elemento.classList.add("menuActivo");
+        actualizarSeleccion();
 
-        hablar(botones[opcion].texto);
+        hablar(opciones[opcion].texto);
 
     }
 
-    if(e.key == "Enter"){
+    if(e.key === " "){
 
-        botones[opcion].elemento.click();
+        e.preventDefault();
+
+        hablar(opciones[opcion].texto);
+
+    }
+
+    if(e.key === "Enter"){
+
+        if(opciones[opcion].accion){
+
+            opciones[opcion].accion();
+
+        }
 
     }
 

@@ -178,3 +178,56 @@ button:hover{
     transition:0.2s;
 
 }
+/* ==========================
+   Menú accesible
+========================== */
+
+#menuPrincipal{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+    margin-top:30px;
+
+}
+
+#menuPrincipal button{
+
+    width:100%;
+
+    font-size:1.2rem;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.menuActivo{
+
+    outline:4px solid #ff9800;
+
+    transform:scale(1.03);
+
+    box-shadow:0 0 15px rgba(255,152,0,.5);
+
+}
+
+.ayudaTeclado{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    font-size:.95rem;
+
+    color:#666;
+
+}
