@@ -3,13 +3,13 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MateSonidos</title>
+    <title>MateSonidos</title>
 
-<link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
@@ -17,86 +17,90 @@
 
 <header>
 
-<h1>🎵 MateSonidos</h1>
+    <h1>🎵 MateSonidos</h1>
 
-<p>Aprender matemática con sonidos y accesibilidad</p>
+    <p>Aprender matemática con sonidos y accesibilidad</p>
 
 </header>
 
 <main>
 
-<div class="menu">
+    <div class="menu">
 
-<h2 id="ultimoNivel">
-Último nivel jugado: Nivel 1
-</h2>
+        <h2 id="ultimoNivel">
+            Último nivel jugado: Nivel 1
+        </h2>
 
-<br>
+        <br>
 
-<button onclick="continuar()">
+        <button onclick="continuar()">
+            ▶ Continuar
+        </button>
 
-▶ Continuar
+        <br><br>
 
-</button>
+        <div class="nivel">
 
-<br><br>
+            <h2>🟦 Nivel 1</h2>
 
-<div class="nivel">
+            <p>Conozco los números</p>
 
-<h2>🟦 Nivel 1</h2>
+            <button onclick="location.href='numeros.html'">
+                ▶ Jugar
+            </button>
 
-<p>Conozco los números</p>
+        </div>
 
-<button onclick="location.href='numeros.html'">
+        <br>
 
-▶ Jugar
+        <div class="nivel">
 
-</button>
+            <h2>🟩 Nivel 2</h2>
 
-</div>
+            <p>Ordena los números</p>
 
-<div class="nivel">
+            <button onclick="location.href='secuencias.html'">
+                ▶ Jugar
+            </button>
 
-<h2>🟩 Nivel 2</h2>
+        </div>
 
-<p>Ordena los números</p>
+        <br>
 
-<button onclick="location.href='secuencias.html'">
+        <div class="nivel bloqueado">
 
-▶ Jugar
+            <h2>🟨 Nivel 3</h2>
 
-</button>
+            <p>Próximamente</p>
 
-</div>
+            <button disabled>
+                🔒
+            </button>
 
-<div class="nivel bloqueado">
+        </div>
 
-<h2>🟨 Nivel 3</h2>
+        <br>
 
-<p>Próximamente</p>
+        <div class="nivel bloqueado">
 
-<button disabled>
+            <h2>🟧 Nivel 4</h2>
 
-🔒
+            <p>Próximamente</p>
 
-</button>
-<div class="nivel bloqueado">
+            <button disabled>
+                🔒
+            </button>
 
-<h2>🟧 Nivel 4</h2>
+        </div>
 
-<p>Próximamente</p>
-
-<button disabled>
-
-🔒
-
-</button>
-</div>
+    </div>
 
 </main>
 
 <script src="js/guardar.js"></script>
 <script src="js/app.js"></script>
+<script src="js/menu.js"></script>
 
 </body>
+
 </html>
