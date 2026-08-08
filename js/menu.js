@@ -1,6 +1,6 @@
 // =====================================
 // MateSonidos
-// Menú accesible 2.1
+// Menú accesible 2.2
 // Teclado + mouse + celular
 // =====================================
 
@@ -19,54 +19,52 @@ const opciones = [
 
     {
         id: "nivel1",
-
         texto: "Nivel 1. Conozco los números.",
-
         accion: function(){
 
             window.location.href = "numeros.html";
 
         }
-
     },
 
     {
         id: "nivel2",
-
         texto: "Nivel 2. Ordena los números.",
-
         accion: function(){
 
             window.location.href = "secuencias.html";
 
         }
+    },
 
+    {
+        id: "nivel3",
+        texto: "Nivel 3. Comparo números.",
+        accion: function(){
+
+            window.location.href = "comparar.html";
+
+        }
     },
 
     {
         id: "configuracion",
-
         texto: "Configuración. Próximamente.",
-
         accion: function(){
 
             hablar("Configuración. Próximamente.");
 
         }
-
     },
 
     {
         id: "ayuda",
-
         texto: "Ayuda. Próximamente.",
-
         accion: function(){
 
             hablar("Ayuda. Próximamente.");
 
         }
-
     }
 
 ];
@@ -80,19 +78,16 @@ function iniciarMenu(){
 
     actualizarSeleccion();
 
-
     opciones.forEach(function(op, indice){
 
         const elemento =
             document.getElementById(op.id);
-
 
         if(!elemento){
 
             return;
 
         }
-
 
         // Mouse
         elemento.addEventListener("mouseenter", function(){
@@ -102,7 +97,6 @@ function iniciarMenu(){
             actualizarSeleccion();
 
         });
-
 
         // Mouse y pantalla táctil
         elemento.addEventListener("click", function(){
@@ -131,7 +125,6 @@ function actualizarSeleccion(){
         const elemento =
             document.getElementById(op.id);
 
-
         if(elemento){
 
             elemento.classList.remove("menuActivo");
@@ -140,12 +133,10 @@ function actualizarSeleccion(){
 
     });
 
-
     const actual =
         document.getElementById(
             opciones[opcion].id
         );
-
 
     if(actual){
 
@@ -164,15 +155,12 @@ function hablar(texto){
 
     speechSynthesis.cancel();
 
-
     const voz =
         new SpeechSynthesisUtterance(texto);
-
 
     voz.lang = "es-ES";
 
     voz.rate = 0.70;
-
 
     speechSynthesis.speak(voz);
 
@@ -191,19 +179,15 @@ function seleccionar(indice){
 
     }
 
-
     if(indice < 0){
 
         indice = opciones.length - 1;
 
     }
 
-
     opcion = indice;
 
-
     actualizarSeleccion();
-
 
     hablar(
         opciones[opcion].texto
@@ -221,7 +205,6 @@ function activar(){
     const seleccion =
         opciones[opcion];
 
-
     if(seleccion.accion){
 
         seleccion.accion();
@@ -237,7 +220,6 @@ function activar(){
 
 document.addEventListener("keydown", function(e){
 
-
     // Flecha abajo
     if(e.key === "ArrowDown"){
 
@@ -247,7 +229,6 @@ document.addEventListener("keydown", function(e){
 
     }
 
-
     // Flecha arriba
     if(e.key === "ArrowUp"){
 
@@ -256,7 +237,6 @@ document.addEventListener("keydown", function(e){
         seleccionar(opcion - 1);
 
     }
-
 
     // Espacio
     if(e.key === " "){
@@ -268,7 +248,6 @@ document.addEventListener("keydown", function(e){
         );
 
     }
-
 
     // Enter
     if(e.key === "Enter"){
