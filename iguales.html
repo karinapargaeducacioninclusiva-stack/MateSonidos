@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MateSonidos - Nivel 3.3</title>
+
+    <link rel="stylesheet"
+          href="css/estilos.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🟨 Nivel 3.3</h1>
+
+    <p>¿Son iguales?</p>
+
+</header>
+
+<main>
+
+    <div class="juego">
+
+        <h2 id="pregunta">
+            📘 Pregunta 1 de 5
+        </h2>
+
+        <br>
+
+        <button onclick="repetir()">
+            🔊 Escuchar nuevamente
+        </button>
+
+        <br><br>
+
+        <div id="numeros"
+             class="numeroGrande">
+        </div>
+
+        <br>
+
+        <div id="consigna">
+            ¿Son iguales?
+        </div>
+
+        <br>
+
+        <input
+            type="text"
+            id="respuesta"
+            placeholder="Escribe sí o no"
+            autocomplete="off">
+
+        <br><br>
+
+        <button onclick="corregir()">
+            ✅ Comprobar
+        </button>
+
+        <br><br>
+
+        <div id="resultado"></div>
+
+        <hr>
+
+        <p id="aciertos">
+            ⭐ Aciertos: 0
+        </p>
+
+        <p id="errores">
+            ❌ Errores: 0
+        </p>
+
+        <div class="progreso">
+
+            <div id="barra"></div>
+
+        </div>
+
+        <br><br>
+
+        <button onclick="volverMenu()">
+            🏠 Volver al menú principal
+        </button>
+
+    </div>
+
+</main>
+
+<script src="js/guardar.js"></script>
+<script src="js/voz.js"></script>
+<script src="js/iguales.js"></script>
+
+</body>
+
+</html>
