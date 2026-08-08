@@ -3,28 +3,36 @@
 // Sistema de voz accesible
 // ======================================
 
+let vozActual = null;
 
 // --------------------------------------
 // Hablar
 // --------------------------------------
 
-function hablar(texto){
+function hablar(texto) {
 
-    speechSynthesis.cancel();
+    // Detener cualquier voz anterior
+    window.speechSynthesis.cancel();
 
-    const voz =
+    // Crear nueva voz
+    vozActual =
         new SpeechSynthesisUtterance(texto);
 
-    voz.lang = "es-ES";
+    vozActual.lang = "es-ES";
 
-    // Velocidad lenta
-    voz.rate = 0.50;
+    // Más lenta para favorecer la comprensión
+    vozActual.rate = 0.45;
 
-    voz.pitch = 1;
+    vozActual.pitch = 1;
 
-    voz.volume = 1;
+    vozActual.volume = 1;
 
-    speechSynthesis.speak(voz);
+    // Esperar un instante antes de reproducir
+    setTimeout(function () {
+
+        window.speechSynthesis.speak(vozActual);
+
+    }, 100);
 
 }
 
@@ -33,8 +41,10 @@ function hablar(texto){
 // Limpiar voz
 // --------------------------------------
 
-function limpiarVoz(){
+function limpiarVoz() {
 
-    speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
+
+    vozActual = null;
 
 }
