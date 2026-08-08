@@ -1,40 +1,40 @@
 // ======================================
-// MateSonidos - Voz
+// MateSonidos
+// Sistema de voz accesible
 // ======================================
 
-function hablar(texto) {
 
-    if (!("speechSynthesis" in window)) {
+// --------------------------------------
+// Hablar
+// --------------------------------------
 
-        console.log("El navegador no permite síntesis de voz.");
-
-        return;
-
-    }
+function hablar(texto){
 
     speechSynthesis.cancel();
 
-    const voz = new SpeechSynthesisUtterance(texto);
+    const voz =
+        new SpeechSynthesisUtterance(texto);
 
     voz.lang = "es-ES";
-    voz.rate = 0.75;
+
+    // Velocidad lenta
+    voz.rate = 0.50;
+
     voz.pitch = 1;
+
+    voz.volume = 1;
 
     speechSynthesis.speak(voz);
 
 }
 
 
-// ======================================
-// Detener voz
-// ======================================
+// --------------------------------------
+// Limpiar voz
+// --------------------------------------
 
-function limpiarVoz() {
+function limpiarVoz(){
 
-    if ("speechSynthesis" in window) {
-
-        speechSynthesis.cancel();
-
-    }
+    speechSynthesis.cancel();
 
 }

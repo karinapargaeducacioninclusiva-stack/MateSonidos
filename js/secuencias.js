@@ -7,22 +7,28 @@
 
 let numeros = [];
 let ordenCorrecto = [];
-let modoOrden = "";
+
 let pregunta = 1;
 let aciertos = 0;
 let errores = 0;
 
-// -------------------------------
+const totalPreguntas = 10;
+
+
+// --------------------------------------
 // Nueva secuencia
-// -------------------------------
+// --------------------------------------
 
 function nuevaSecuencia(){
 
     numeros = [];
 
+    // Generar 3 números diferentes del 1 al 9
+
     while(numeros.length < 3){
 
-        const n = Math.floor(Math.random()*9)+1;
+        const n =
+            Math.floor(Math.random() * 9) + 1;
 
         if(!numeros.includes(n)){
 
@@ -32,120 +38,158 @@ function nuevaSecuencia(){
 
     }
 
-    // Elegir el modo aleatoriamente
-    if(Math.random() < 0.5){
 
-        modoOrden = "menor";
+    // Orden correcto: menor a mayor
 
-        ordenCorrecto = [...numeros].sort((a,b)=>a-b);
+    ordenCorrecto =
+        [...numeros].sort((a,b) => a-b);
 
-    }else{
 
-        modoOrden = "mayor";
-
-        ordenCorrecto = [...numeros].sort((a,b)=>b-a);
-
-    }
+    // Mostrar los números en pantalla
 
     document.getElementById("numeros").textContent =
         numeros.join(" - ");
 
+
+    // Limpiar respuesta
+
     document.getElementById("respuesta").value = "";
+
+
+    // Limpiar resultado
+
+    document.getElementById("resultado").textContent = "";
+
+
+    // Llevar el foco al campo
 
     document.getElementById("respuesta").focus();
 
-    // Mostrar la consigna en pantalla
-    document.getElementById("consigna").textContent =
-        (modoOrden === "menor")
-        ? "📌 Ordena de menor a mayor"
-        : "📌 Ordena de mayor a menor";
+
+    // Actualizar progreso
+
+    actualizarBarra();
+
+
+    // Leer la consigna
 
     repetir();
 
 }
 
-// -------------------------------
+
+// --------------------------------------
 // Leer nuevamente
-// -------------------------------
+// --------------------------------------
 
 function repetir(){
 
     limpiarVoz();
 
-    hablar("Escucha atentamente.");
 
-    hablar("Primer número.");
-    hablar(numeros[0].toString());
+    const texto =
 
-    hablar("Segundo número.");
-    hablar(numeros[1].toString());
+        "Escucha atentamente. " +
 
-    hablar("Tercer número.");
-    hablar(numeros[2].toString());
+        "Primer número: " +
+        numeros[0] +
+        ". " +
 
-    if(modoOrden==="menor"){
+        "Segundo número: " +
+        numeros[1] +
+        ". " +
 
-        hablar("Ahora escribe los números ordenados de menor a mayor, separados por espacios.");
+        "Tercer número: " +
+        numeros[2] +
+        ". " +
 
-    }else{
+        "Ahora escribe los números de menor a mayor, " +
+        "separados por espacios.";
 
-        hablar("Ahora escribe los números ordenados de mayor a menor, separados por espacios.");
 
-    }
+    hablar(texto);
 
 }
-// -------------------------------
-// Barra
-// -------------------------------
+
+
+// --------------------------------------
+// Barra de progreso
+// --------------------------------------
 
 function actualizarBarra(){
 
     document.getElementById("pregunta").textContent =
-        "📘 Pregunta " + pregunta + " de 10";
+        "📘 Pregunta " +
+        pregunta +
+        " de " +
+        totalPreguntas;
+
 
     document.getElementById("barra").style.width =
-        (pregunta*10) + "%";
+        (pregunta / totalPreguntas * 100) + "%";
 
 }
 
-// -------------------------------
+
+// --------------------------------------
 // Corregir
-// -------------------------------
+// --------------------------------------
 
 function corregir(){
 
-    const respuesta = document
-        .getElementById("respuesta")
-        .value
-        .trim();
+    const respuesta =
 
-    if(respuesta===""){
+        document
+            .getElementById("respuesta")
+            .value
+            .trim();
+
+
+    // No hay respuesta
+
+    if(respuesta === ""){
 
         limpiarVoz();
 
-        hablar("Debes escribir tres números.");
+        hablar(
+            "Debes escribir tres números."
+        );
 
         return;
 
     }
 
-    const usuario = respuesta
-        .split(/\s+/)
-        .map(Number);
+
+    // Convertir respuesta en números
+
+    const usuario =
+
+        respuesta
+            .split(/\s+/)
+            .map(Number);
+
 
     let correcto = true;
+
+
+    // Verificar cantidad
 
     if(usuario.length !== 3){
 
         correcto = false;
 
-    }else{
+    }
 
-        for(let i=0;i<3;i++){
+    else{
+
+        // Verificar cada número
+
+        for(let i = 0; i < 3; i++){
 
             if(usuario[i] !== ordenCorrecto[i]){
 
                 correcto = false;
+
                 break;
 
             }
@@ -154,132 +198,196 @@ function corregir(){
 
     }
 
+
+    // ----------------------------------
+    // Respuesta correcta
+    // ----------------------------------
+
     if(correcto){
 
         limpiarVoz();
 
-        hablar("Muy bien. Respuesta correcta.");
+        hablar(
+            "Muy bien. Respuesta correcta."
+        );
 
-        document.getElementById("resultado").textContent =
+
+        document
+            .getElementById("resultado")
+            .textContent =
             "✅ Correcto";
+
 
         aciertos++;
 
-        document.getElementById("aciertos").textContent =
+
+        document
+            .getElementById("aciertos")
+            .textContent =
             "⭐ Aciertos: " + aciertos;
 
-    }else{
+    }
+
+
+    // ----------------------------------
+    // Respuesta incorrecta
+    // ----------------------------------
+
+    else{
 
         limpiarVoz();
 
-        hablar("Incorrecto. Intenta nuevamente.");
+        hablar(
+            "Incorrecto. Intenta nuevamente."
+        );
 
-        document.getElementById("resultado").textContent =
+
+        document
+            .getElementById("resultado")
+            .textContent =
             "❌ Incorrecto";
+
 
         errores++;
 
-        document.getElementById("errores").textContent =
+
+        document
+            .getElementById("errores")
+            .textContent =
             "❌ Errores: " + errores;
 
     }
 
-    if(pregunta >= 10){
 
-        terminarJuego();
+    // ----------------------------------
+    // Final del nivel
+    // ----------------------------------
+
+    if(pregunta >= totalPreguntas){
+
+        setTimeout(function(){
+
+            terminarJuego();
+
+        }, 1500);
+
         return;
 
     }
 
+
+    // ----------------------------------
+    // Siguiente pregunta
+    // ----------------------------------
+
     pregunta++;
 
-    actualizarBarra();
+    guardarDato("ultimoNivel", 2);
 
-    guardarDato("ultimoNivel",2);
 
     setTimeout(function(){
 
-        document.getElementById("resultado").textContent = "";
-
         nuevaSecuencia();
 
-    },1500);
+    }, 1500);
 
 }
 
-// -------------------------------
+
+// --------------------------------------
 // Final
-// -------------------------------
+// --------------------------------------
 
 function terminarJuego(){
 
     limpiarVoz();
 
-    hablar("Felicitaciones. Terminaste el nivel.");
+
+    hablar(
+        "Felicitaciones. Terminaste el Nivel 2."
+    );
+
 
     document.querySelector("main").innerHTML = `
 
-<h1>🎉 ¡Felicitaciones!</h1>
+        <h1>🎉 ¡Felicitaciones!</h1>
 
-<h2>Terminaste el Nivel 2</h2>
+        <h2>Terminaste el Nivel 2</h2>
 
-<p>⭐ Aciertos: ${aciertos}</p>
+        <p>
+            ⭐ Aciertos: ${aciertos}
+        </p>
 
-<p>❌ Errores: ${errores}</p>
+        <p>
+            ❌ Errores: ${errores}
+        </p>
 
-<br>
+        <br>
 
-<button onclick="location.reload()">
-🔄 Jugar otra vez
-</button>
+        <button onclick="location.reload()">
+            🔄 Jugar otra vez
+        </button>
 
-<br><br>
+        <br><br>
 
-<button onclick="window.location='index.html'">
-🏠 Volver al menú principal
-</button>
+        <button onclick="window.location='index.html'">
+            🏠 Volver al menú principal
+        </button>
 
-`;
+    `;
 
 }
 
-// -------------------------------
-// Volver
-// -------------------------------
+
+// --------------------------------------
+// Volver al menú
+// --------------------------------------
 
 function volverMenu(){
 
     const salir = confirm(
-        "¿Desea volver al menú principal?\n\nSe perderá el progreso de esta partida."
+        "¿Desea volver al menú principal?\n\n" +
+        "Se perderá el progreso de esta partida."
     );
+
 
     if(salir){
 
         limpiarVoz();
 
-        window.location.href = "index.html";
+        window.location.href =
+            "index.html";
 
     }
 
 }
 
-// -------------------------------
-// Enter
-// -------------------------------
 
-document.getElementById("respuesta").addEventListener("keydown",function(e){
+// --------------------------------------
+// Enter para comprobar
+// --------------------------------------
 
-    if(e.key==="Enter"){
+document
+    .getElementById("respuesta")
+    .addEventListener(
+        "keydown",
+        function(e){
 
-        corregir();
+            if(e.key === "Enter"){
 
-    }
+                e.preventDefault();
 
-});
+                corregir();
 
-// -------------------------------
+            }
+
+        }
+    );
+
+
+// --------------------------------------
 // Inicio
-// -------------------------------
+// --------------------------------------
 
 actualizarBarra();
 
