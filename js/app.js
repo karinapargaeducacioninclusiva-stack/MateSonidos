@@ -5,42 +5,44 @@
 
 window.addEventListener("DOMContentLoaded", iniciarApp);
 
-function iniciarApp(){
+function iniciarApp() {
 
     mostrarUltimoNivel();
 
 }
 
-function mostrarUltimoNivel(){
 
-    const ultimoNivel = leerDato("ultimoNivel", 1);
+// --------------------------------------
+// Mostrar último nivel
+// --------------------------------------
+
+function mostrarUltimoNivel() {
 
     const mensaje = document.getElementById("ultimoNivel");
 
-    if(!mensaje) return;
+    if (!mensaje) return;
+
+    let ultimoNivel = 1;
+
+    // Intentamos recuperar el último nivel
+    if (typeof leerDato === "function") {
+
+        ultimoNivel = leerDato("ultimoNivel", 1);
+
+    }
 
     mensaje.textContent =
         "Último nivel jugado: Nivel " + ultimoNivel;
 
 }
 
-function continuar(){
 
-    const ultimoNivel = leerDato("ultimoNivel", 1);
+// --------------------------------------
+// Continuar
+// --------------------------------------
 
-    switch(ultimoNivel){
+function continuar() {
 
-        case 1:
-            window.location = "numeros.html";
-            break;
-
-        case 2:
-            window.location = "secuencias.html";
-            break;
-
-        default:
-            window.location = "numeros.html";
-
-    }
+    window.location.href = "numeros.html";
 
 }

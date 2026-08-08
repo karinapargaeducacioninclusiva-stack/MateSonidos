@@ -431,3 +431,49 @@ button{
 }
 
 }
+/* ======================================
+   BOTONES: INTERACCIÓN CON MOUSE Y TÁCTIL
+====================================== */
+
+button {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+#menuPrincipal {
+    position: relative;
+    z-index: 10;
+}
+
+#menuPrincipal button {
+    pointer-events: auto;
+}
+.botonMenu {
+    width: 240px;
+    padding: 15px;
+    margin: 10px auto;
+    display: block;
+    box-sizing: border-box;
+
+    font-size: 26px;
+    text-align: center;
+    text-decoration: none;
+
+    background: #1565d8;
+    color: white;
+
+    border-radius: 12px;
+    cursor: pointer;
+
+    position: relative;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.botonMenu:hover {
+    background: #0d47a1;
+    transform: scale(1.03);
+}
