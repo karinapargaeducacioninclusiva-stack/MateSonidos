@@ -82,35 +82,48 @@ function nuevaSecuencia(){
 // Leer nuevamente
 // --------------------------------------
 
-function repetir(){
+function repetir()function repetir(){
 
     limpiarVoz();
 
-
-    const texto =
-
-        "Escucha atentamente. " +
-
+    // Primer número
+    hablar(
         "Primer número: " +
-        numeros[0] +
-        ". " +
+        numeros[0]
+    );
 
-        "Segundo número: " +
-        numeros[1] +
-        ". " +
+    // Segundo número
+    setTimeout(function(){
 
-        "Tercer número: " +
-        numeros[2] +
-        ". " +
+        hablar(
+            "Segundo número: " +
+            numeros[1]
+        );
 
-        "Ahora escribe los números de menor a mayor, " +
-        "separados por espacios.";
+    }, 1800);
 
+    // Tercer número
+    setTimeout(function(){
 
-    hablar(texto);
+        hablar(
+            "Tercer número: " +
+            numeros[2]
+        );
+
+    }, 3600);
+
+    // Consigna
+    setTimeout(function(){
+
+        hablar(
+            "Ahora escribe los números " +
+            "de menor a mayor, " +
+            "separados por espacios."
+        );
+
+    }, 5400);
 
 }
-
 
 // --------------------------------------
 // Barra de progreso

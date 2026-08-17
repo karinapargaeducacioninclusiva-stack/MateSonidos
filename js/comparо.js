@@ -188,62 +188,62 @@ function nuevaPregunta(){
 
 function repetir(){
 
-    limpiarVoz();
+    // Detener cualquier lectura anterior
+    window.speechSynthesis.cancel();
+
+    let texto = "";
+
+    if(tipoPregunta === "mayor"){
+
+        texto =
+            "Primer número: " +
+            numero1 +
+            ". Segundo número: " +
+            numero2 +
+            ". ¿Cuál es mayor?";
+
+    }
+
+    else if(tipoPregunta === "menor"){
+
+        texto =
+            "Primer número: " +
+            numero1 +
+            ". Segundo número: " +
+            numero2 +
+            ". ¿Cuál es menor?";
+
+    }
+
+    else{
+
+        texto =
+            "Primer número: " +
+            numero1 +
+            ". Segundo número: " +
+            numero2 +
+            ". ¿Son iguales? Responde sí o no.";
+
+    }
 
 
-    // PRIMER NÚMERO
+    const voz =
+        new SpeechSynthesisUtterance(texto);
 
-    hablar(
-        "Primer número: " +
-        numero1
-    );
+    voz.lang = "es-ES";
 
+    // Velocidad lenta
+    voz.rate = 0.50;
 
-    // SEGUNDO NÚMERO
+    voz.pitch = 1;
 
-    setTimeout(function(){
-
-        hablar(
-            "Segundo número: " +
-            numero2
-        );
-
-    }, 1800);
+    voz.volume = 1;
 
 
-    // PREGUNTA
-
-    setTimeout(function(){
-
-        if(tipoPregunta === "mayor"){
-
-            hablar(
-                "¿Cuál es mayor?"
-            );
-
-        }
-
-        else if(tipoPregunta === "menor"){
-
-            hablar(
-                "¿Cuál es menor?"
-            );
-
-        }
-
-        else{
-
-            hablar(
-                "¿Son iguales? " +
-                "Responde sí o no."
-            );
-
-        }
-
-    }, 3600);
+    // Una única reproducción
+    window.speechSynthesis.speak(voz);
 
 }
-
 
 // ======================================
 // BARRA
