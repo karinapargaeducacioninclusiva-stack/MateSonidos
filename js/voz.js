@@ -4,44 +4,66 @@
 // ======================================
 
 let vozActual = null;
+let temporizadorVoz = null;
 
-// --------------------------------------
-// Hablar
-// --------------------------------------
 
-function hablar(texto) {
+// ======================================
+// HABLAR
+// ======================================
 
-    // Detener cualquier voz anterior
+function hablar(texto){
+
+    // Cancelar cualquier lectura pendiente
+    if(temporizadorVoz !== null){
+
+        clearTimeout(temporizadorVoz);
+
+        temporizadorVoz = null;
+
+    }
+
+    // Detener voz anterior
     window.speechSynthesis.cancel();
 
-    // Crear nueva voz
+
     vozActual =
         new SpeechSynthesisUtterance(texto);
 
     vozActual.lang = "es-ES";
 
-    // Más lenta para favorecer la comprensión
-    vozActual.rate = 0.45;
+    // Velocidad base de MateSonidos
+    vozActual.rate = 0.50;
 
     vozActual.pitch = 1;
 
     vozActual.volume = 1;
 
-    // Esperar un instante antes de reproducir
-    setTimeout(function () {
+
+    // Pequeña pausa antes de comenzar
+    temporizadorVoz = setTimeout(function(){
 
         window.speechSynthesis.speak(vozActual);
 
-    }, 100);
+        temporizadorVoz = null;
+
+    }, 250);
 
 }
 
 
-// --------------------------------------
-// Limpiar voz
-// --------------------------------------
+// ======================================
+// LIMPIAR VOZ
+// ======================================
 
-function limpiarVoz() {
+function limpiarVoz(){
+
+    if(temporizadorVoz !== null){
+
+        clearTimeout(temporizadorVoz);
+
+        temporizadorVoz = null;
+
+    }
 
     window.speechSynthesis.cancel();
 
