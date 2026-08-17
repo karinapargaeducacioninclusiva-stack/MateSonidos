@@ -186,10 +186,9 @@ function nuevaPregunta(){
 // ESCUCHAR NUEVAMENTE
 // ======================================
 
-function repetir(){
+function repetir()function repetir(){
 
-    // Detener cualquier lectura anterior
-    window.speechSynthesis.cancel();
+    limpiarVoz();
 
     let texto = "";
 
@@ -198,9 +197,11 @@ function repetir(){
         texto =
             "Primer número: " +
             numero1 +
-            ". Segundo número: " +
+            ". " +
+            "Segundo número: " +
             numero2 +
-            ". ¿Cuál es mayor?";
+            ". " +
+            "¿Cuál es mayor?";
 
     }
 
@@ -209,9 +210,11 @@ function repetir(){
         texto =
             "Primer número: " +
             numero1 +
-            ". Segundo número: " +
+            ". " +
+            "Segundo número: " +
             numero2 +
-            ". ¿Cuál es menor?";
+            ". " +
+            "¿Cuál es menor?";
 
     }
 
@@ -220,12 +223,18 @@ function repetir(){
         texto =
             "Primer número: " +
             numero1 +
-            ". Segundo número: " +
+            ". " +
+            "Segundo número: " +
             numero2 +
-            ". ¿Son iguales? Responde sí o no.";
+            ". " +
+            "¿Son iguales? " +
+            "Responde sí o no.";
 
     }
 
+    hablar(texto);
+
+}
 
     const voz =
         new SpeechSynthesisUtterance(texto);
