@@ -5,13 +5,18 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>MateSonidos</title>
 
-    <link rel="stylesheet" href="css/estilos.css">
+    <link
+        rel="stylesheet"
+        href="css/estilos.css">
 
 </head>
+
 
 <body>
 
@@ -19,63 +24,136 @@
 
     <h1>🎵 MateSonidos</h1>
 
-    <p>Aprender matemática con sonidos y accesibilidad</p>
+    <p>
+        Aprender matemática con sonidos y accesibilidad
+    </p>
 
 </header>
 
+
 <main>
 
-    <div class="menu">
+    <section class="menu">
 
         <h2 id="ultimoNivel">
-            Último nivel jugado: Nivel 1
+            Último nivel jugado: Nivel 2
         </h2>
 
-        <nav id="menuPrincipal">
+
+        <nav
+            id="menuPrincipal"
+            aria-label="Menú principal">
+
+
+            <!-- ========================= -->
+            <!-- NIVEL 1 -->
+            <!-- ========================= -->
 
             <button
                 id="nivel1"
-                onclick="window.location.href='numeros.html'">
+                type="button">
+
                 🟦 Nivel 1 · Conozco los números
+
             </button>
+
+
+            <!-- ========================= -->
+            <!-- NIVEL 2 -->
+            <!-- ========================= -->
 
             <button
                 id="nivel2"
-                onclick="window.location.href='secuencias.html'">
+                type="button">
+
                 🟩 Nivel 2 · Ordena los números
-            </button>
-<button id="nivel3">
-    🟨 Nivel 3 · Comparo números
-</button>
-            <button
-                id="configuracion">
-                ⚙ Configuración
+
             </button>
 
+
+            <!-- ========================= -->
+            <!-- NIVEL 3 -->
+            <!-- ========================= -->
+
             <button
-                id="ayuda">
-                ❓ Ayuda
+                id="nivel3"
+                type="button">
+
+                🟨 Nivel 3 · Comparo números
+
             </button>
-<button id="nivel4">
-    🟪 Nivel 4 · Número y cantidad
-</button>
+
+
+            <!-- ========================= -->
+            <!-- CONFIGURACIÓN -->
+            <!-- ========================= -->
+
+            <button
+                id="configuracion"
+                type="button">
+
+                ⚙ Configuración
+
+            </button>
+
+
+            <!-- ========================= -->
+            <!-- AYUDA -->
+            <!-- ========================= -->
+
+            <button
+                id="ayuda"
+                type="button">
+
+                ❓ Ayuda
+
+            </button>
+
+
+            <!-- ========================= -->
+            <!-- NIVEL 4 -->
+            <!-- ========================= -->
+
+            <button
+                id="nivel4"
+                type="button">
+
+                🟪 Nivel 4 · Número y cantidad
+
+            </button>
+
+
         </nav>
+
 
         <p class="ayudaTeclado">
 
-            ↑ ↓ Moverse &nbsp;&nbsp;
-            Enter Seleccionar &nbsp;&nbsp;
+            ↑ ↓ Moverse
+            &nbsp;&nbsp;
+            Enter Seleccionar
+            &nbsp;&nbsp;
             Espacio Repetir
 
         </p>
 
-    </div>
+    </section>
 
 </main>
 
-<script src="js/guardar.js"></script>
-<script src="js/app.js"></script>
+
+<!-- ============================= -->
+<!-- SISTEMA DE VOZ -->
+<!-- ============================= -->
+
+<script src="js/voz.js"></script>
+
+
+<!-- ============================= -->
+<!-- MENÚ PRINCIPAL -->
+<!-- ============================= -->
+
 <script src="js/menu.js"></script>
+
 
 </body>
 

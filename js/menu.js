@@ -1,200 +1,265 @@
-// =====================================
+// ======================================
 // MateSonidos
-// Menú accesible 2.2
+// Menú principal accesible
 // Teclado + mouse + celular
-// =====================================
+// ======================================
 
-console.log("MENU NUEVO CARGADO");
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarMenu
+);
 
-document.addEventListener("DOMContentLoaded", iniciarMenu);
 
 let opcion = 0;
 
 
-// =====================================
+// ======================================
 // OPCIONES DEL MENÚ
-// =====================================
+// ======================================
 
 const opciones = [
 
     {
         id: "nivel1",
-        texto: "Nivel 1. Conozco los números.",
+
+        texto:
+            "Nivel 1. Conozco los números.",
+
         accion: function(){
 
-            window.location.href = "numeros.html";
+            window.location.href =
+                "numeros.html";
 
         }
+
     },
+
 
     {
         id: "nivel2",
-        texto: "Nivel 2. Ordena los números.",
+
+        texto:
+            "Nivel 2. Ordena los números.",
+
         accion: function(){
 
-            window.location.href = "secuencias.html";
+            window.location.href =
+                "secuencias.html";
 
         }
+
     },
+
 
     {
         id: "nivel3",
-        texto: "Nivel 3. Comparo números.",
+
+        texto:
+            "Nivel 3. Comparo números.",
+
         accion: function(){
 
-            window.location.href = "comparar.html";
+            window.location.href =
+                "comparar.html";
 
         }
+
     },
-{
-    id: "nivel4",
-    texto: "Nivel 4. Número y cantidad.",
-    accion: function(){
-        window.location.href = "nivel4.html";
-    }
-},
+
+
     {
-        id: "nivell4",
-        texto: "Nivel 4. Número y cantidad.",
-    accion: function(){
+        id: "nivel4",
 
-        window.location.href =
-            "nivel4.html";
+        texto:
+            "Nivel 4. Número y cantidad.",
 
-    }
-},
+        accion: function(){
+
+            // IMPORTANTE:
+            // Nivel 4 abre primero
+            // su submenú.
+
+            window.location.href =
+                "nivel4.html";
+
+        }
+
+    },
+
+
+    {
+        id: "configuracion",
+
+        texto:
+            "Configuración. Próximamente.",
+
+        accion: function(){
+
+            hablar(
+                "Configuración. Próximamente."
+            );
+
+        }
+
+    },
+
 
     {
         id: "ayuda",
-        texto: "Ayuda. Próximamente.",
+
+        texto:
+            "Ayuda. Próximamente.",
+
         accion: function(){
 
-            hablar("Ayuda. Próximamente.");
+            hablar(
+                "Ayuda. Próximamente."
+            );
 
         }
+
     }
 
 ];
 
 
-// =====================================
+// ======================================
 // INICIAR MENÚ
-// =====================================
+// ======================================
 
 function iniciarMenu(){
 
     actualizarSeleccion();
 
-    opciones.forEach(function(op, indice){
 
-        const elemento =
-            document.getElementById(op.id);
+    opciones.forEach(
+        function(op, indice){
 
-        if(!elemento){
+            const elemento =
+                document.getElementById(
+                    op.id
+                );
 
-            return;
+
+            if(!elemento){
+
+                return;
+
+            }
+
+
+            // ==============================
+            // MOUSE
+            // ==============================
+
+            elemento.addEventListener(
+                "mouseenter",
+                function(){
+
+                    opcion = indice;
+
+                    actualizarSeleccion();
+
+                }
+            );
+
+
+            // ==============================
+            // CLICK / CELULAR
+            // ==============================
+
+            elemento.addEventListener(
+                "click",
+                function(){
+
+                    opcion = indice;
+
+                    actualizarSeleccion();
+
+                    activar();
+
+                }
+            );
 
         }
-
-        // Mouse
-        elemento.addEventListener("mouseenter", function(){
-
-            opcion = indice;
-
-            actualizarSeleccion();
-
-        });
-
-        // Mouse y pantalla táctil
-        elemento.addEventListener("click", function(){
-
-            opcion = indice;
-
-            actualizarSeleccion();
-
-            activar();
-
-        });
-
-    });
+    );
 
 }
 
 
-// =====================================
-// ACTUALIZAR BORDE NARANJA
-// =====================================
+// ======================================
+// ACTUALIZAR SELECCIÓN
+// ======================================
 
 function actualizarSeleccion(){
 
-    opciones.forEach(function(op){
+    opciones.forEach(
+        function(op){
 
-        const elemento =
-            document.getElementById(op.id);
+            const elemento =
+                document.getElementById(
+                    op.id
+                );
 
-        if(elemento){
 
-            elemento.classList.remove("menuActivo");
+            if(elemento){
+
+                elemento.classList.remove(
+                    "menuActivo"
+                );
+
+            }
 
         }
+    );
 
-    });
 
     const actual =
         document.getElementById(
             opciones[opcion].id
         );
 
+
     if(actual){
 
-        actual.classList.add("menuActivo");
+        actual.classList.add(
+            "menuActivo"
+        );
 
     }
 
 }
 
 
-// =====================================
-// VOZ
-// =====================================
-
-function hablar(texto){
-
-    speechSynthesis.cancel();
-
-    const voz =
-        new SpeechSynthesisUtterance(texto);
-
-    voz.lang = "es-ES";
-
-    voz.rate = 0.70;
-
-    speechSynthesis.speak(voz);
-
-}
-
-
-// =====================================
-// CAMBIAR OPCIÓN
-// =====================================
+// ======================================
+// SELECCIONAR OPCIÓN
+// ======================================
 
 function seleccionar(indice){
 
-    if(indice >= opciones.length){
+    if(
+        indice >=
+        opciones.length
+    ){
 
         indice = 0;
 
     }
 
+
     if(indice < 0){
 
-        indice = opciones.length - 1;
+        indice =
+            opciones.length - 1;
 
     }
 
+
     opcion = indice;
 
+
     actualizarSeleccion();
+
 
     hablar(
         opciones[opcion].texto
@@ -203,16 +268,20 @@ function seleccionar(indice){
 }
 
 
-// =====================================
+// ======================================
 // ACTIVAR OPCIÓN
-// =====================================
+// ======================================
 
 function activar(){
 
     const seleccion =
         opciones[opcion];
 
-    if(seleccion.accion){
+
+    if(
+        seleccion &&
+        seleccion.accion
+    ){
 
         seleccion.accion();
 
@@ -221,48 +290,70 @@ function activar(){
 }
 
 
-// =====================================
+// ======================================
 // TECLADO
-// =====================================
+// ======================================
 
-document.addEventListener("keydown", function(e){
+document.addEventListener(
+    "keydown",
+    function(e){
 
-    // Flecha abajo
-    if(e.key === "ArrowDown"){
+        // ------------------------------
+        // FLECHA ABAJO
+        // ------------------------------
 
-        e.preventDefault();
+        if(e.key === "ArrowDown"){
 
-        seleccionar(opcion + 1);
+            e.preventDefault();
+
+            seleccionar(
+                opcion + 1
+            );
+
+        }
+
+
+        // ------------------------------
+        // FLECHA ARRIBA
+        // ------------------------------
+
+        if(e.key === "ArrowUp"){
+
+            e.preventDefault();
+
+            seleccionar(
+                opcion - 1
+            );
+
+        }
+
+
+        // ------------------------------
+        // ESPACIO
+        // ------------------------------
+
+        if(e.key === " "){
+
+            e.preventDefault();
+
+            hablar(
+                opciones[opcion].texto
+            );
+
+        }
+
+
+        // ------------------------------
+        // ENTER
+        // ------------------------------
+
+        if(e.key === "Enter"){
+
+            e.preventDefault();
+
+            activar();
+
+        }
 
     }
-
-    // Flecha arriba
-    if(e.key === "ArrowUp"){
-
-        e.preventDefault();
-
-        seleccionar(opcion - 1);
-
-    }
-
-    // Espacio
-    if(e.key === " "){
-
-        e.preventDefault();
-
-        hablar(
-            opciones[opcion].texto
-        );
-
-    }
-
-    // Enter
-    if(e.key === "Enter"){
-
-        e.preventDefault();
-
-        activar();
-
-    }
-
-});
+);
