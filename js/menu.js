@@ -46,7 +46,13 @@ const opciones = [
 
         }
     },
-
+{
+    id: "nivel4",
+    texto: "Nivel 4. Número y cantidad.",
+    accion: function(){
+        window.location.href = "cantidad.html";
+    }
+},
     {
         id: "configuracion",
         texto: "Configuración. Próximamente.",
