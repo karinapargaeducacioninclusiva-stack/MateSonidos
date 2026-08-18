@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MateSonidos - Nivel 4.3</title>
+
+    <link rel="stylesheet"
+          href="css/estilos.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🟨 Nivel 4.3</h1>
+
+    <p>¿Cuántos hay?</p>
+
+</header>
+
+
+<main>
+
+    <div class="juego">
+
+        <h2 id="pregunta">
+            Pregunta 1 de 5
+        </h2>
+
+        <p id="instruccion">
+            Escucha la cantidad y elige el número.
+        </p>
+
+        <br>
+
+        <button
+            type="button"
+            onclick="repetir()">
+
+            🔊 Escuchar nuevamente
+
+        </button>
+
+        <br><br>
+
+        <div
+            id="opciones"
+            role="radiogroup"
+            aria-label="Opciones de respuesta">
+        </div>
+
+        <br>
+
+        <div
+            id="resultado"
+            aria-live="assertive">
+        </div>
+
+        <hr>
+
+        <p id="aciertos">
+            ⭐ Aciertos: 0
+        </p>
+
+        <p id="errores">
+            ❌ Errores: 0
+        </p>
+
+        <div
+            class="progreso"
+            aria-label="Progreso de la actividad">
+
+            <div id="barra"></div>
+
+        </div>
+
+        <br><br>
+
+        <button
+            type="button"
+            onclick="volverMenu()">
+
+            🏠 Volver al menú del Nivel 4
+
+        </button>
+
+    </div>
+
+</main>
+
+
+<script src="js/guardar.js"></script>
+
+<script src="js/voz.js"></script>
+
+<script src="js/cuantos.js"></script>
+
+</body>
+
+</html>
