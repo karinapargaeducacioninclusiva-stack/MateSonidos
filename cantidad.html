@@ -8,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>MateSonidos - Nivel 3.4</title>
+    <title>MateSonidos - Nivel 4.1</title>
 
     <link rel="stylesheet"
           href="css/estilos.css">
@@ -19,9 +19,9 @@
 
 <header>
 
-    <h1>🟨 Nivel 3.4</h1>
+    <h1>🔵 Nivel 4.1</h1>
 
-    <p>Comparo números</p>
+    <p>Reconozco cantidades</p>
 
 </header>
 
@@ -31,18 +31,24 @@
     <div class="juego">
 
         <h2 id="pregunta">
-            📘 Pregunta 1 de 5
+            Pregunta 1 de 5
         </h2>
+
+
+        <p id="instruccion">
+
+            Escucha la cantidad y escribe
+            cuántos escuchaste.
+
+        </p>
 
 
         <br>
 
 
-        <!-- BOTÓN PARA ESCUCHAR -->
-
         <button
             type="button"
-            id="botonEscuchar">
+            onclick="repetir()">
 
             🔊 Escuchar nuevamente
 
@@ -52,43 +58,28 @@
         <br><br>
 
 
-        <!-- NÚMEROS -->
+        <label for="respuesta">
 
-        <div
-            id="numeros"
-            class="numeroGrande">
+            ¿Cuántos escuchaste?
 
-        </div>
-
-
-        <br>
-
-
-        <!-- CONSIGNA -->
-
-        <div id="consigna">
-
-            Escucha la pregunta.
-
-        </div>
-
-
-        <br>
-
-
-        <!-- RESPUESTA -->
-
-        <input
-            type="text"
-            id="respuesta"
-            placeholder="Escribe tu respuesta"
-            autocomplete="off">
+        </label>
 
 
         <br><br>
 
 
-        <!-- COMPROBAR -->
+        <input
+            type="number"
+            id="respuesta"
+            min="1"
+            max="5"
+            inputmode="numeric"
+            autocomplete="off"
+            aria-label="Escribe cuántos escuchaste">
+
+
+        <br><br>
+
 
         <button
             type="button"
@@ -102,15 +93,14 @@
         <br><br>
 
 
-        <!-- RESULTADO -->
-
-        <div id="resultado"></div>
+        <div
+            id="resultado"
+            aria-live="assertive">
+        </div>
 
 
         <hr>
 
-
-        <!-- ACIERTOS -->
 
         <p id="aciertos">
 
@@ -119,8 +109,6 @@
         </p>
 
 
-        <!-- ERRORES -->
-
         <p id="errores">
 
             ❌ Errores: 0
@@ -128,9 +116,9 @@
         </p>
 
 
-        <!-- PROGRESO -->
-
-        <div class="progreso">
+        <div
+            class="progreso"
+            aria-label="Progreso de la actividad">
 
             <div id="barra"></div>
 
@@ -139,8 +127,6 @@
 
         <br><br>
 
-
-        <!-- VOLVER AL MENÚ -->
 
         <button
             type="button"
@@ -155,19 +141,11 @@
 </main>
 
 
-<!-- SISTEMA DE GUARDADO -->
-
 <script src="js/guardar.js"></script>
-
-
-<!-- SISTEMA DE VOZ -->
 
 <script src="js/voz.js"></script>
 
-
-<!-- NIVEL 3.4 -->
-
-<script src="js/comparo.js"></script>
+<script src="js/cantidad.js"></script>
 
 
 </body>

@@ -531,8 +531,31 @@ function volverMenu(){
         "index.html";
 
 }
+// ======================================
+// VOLVER AL MENÚ
+// ======================================
+
+function volverMenu(){
+
+    limpiarVoz();
+
+    window.location.href =
+        "index.html";
+
+}
 
 
+// ======================================
+// BOTÓN ESCUCHAR
+// ======================================
+
+document
+    .getElementById("botonEscuchar")
+    .addEventListener("click", function(){
+
+        repetir();
+
+    });
 // ======================================
 // ENTER
 // ======================================
