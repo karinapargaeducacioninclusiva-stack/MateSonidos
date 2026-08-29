@@ -1,17 +1,15 @@
 // ======================================
-// MATESONIDOS - NIVEL 3.1
-// ¿Cuál es mayor?
-// Números del 1 al 3
+// MateSonidos - Nivel 3.4
+// Comparo números
+// Voz accesible y controlada
 // ======================================
-
-// --------------------------------------
-// Variables
-// --------------------------------------
 
 let numero1 = 0;
 let numero2 = 0;
 
-let respuestaCorrecta = 0;
+let tipoPregunta = "";
+
+let respuestaCorrecta = "";
 
 let pregunta = 1;
 let aciertos = 0;
@@ -20,325 +18,796 @@ let errores = 0;
 const totalPreguntas = 5;
 
 
-// --------------------------------------
-// Generar pregunta
-// --------------------------------------
+// ======================================
+// INICIO
+// ======================================
 
-function nuevaPregunta(){
-
-    // Generar dos números diferentes
-    do {
-
-        numero1 =
-            Math.floor(Math.random() * 3) + 1;
-
-        numero2 =
-            Math.floor(Math.random() * 3) + 1;
-
-    } while(numero1 === numero2);
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarJuego
+);
 
 
-    // Determinar cuál es mayor
-    respuestaCorrecta =
-        Math.max(numero1, numero2);
+function iniciarJuego() {
+
+    actualizarBarra();
+
+    nuevaPregunta();
+
+}
 
 
-    // Mostrar los números
-    document.getElementById("numeros").textContent =
-        numero1 + "     " + numero2;
+// ======================================
+// NUEVA PREGUNTA
+// ======================================
+
+function nuevaPregunta() {
+
+    // Números del 1 al 5
+
+    numero1 =
+        Math.floor(
+            Math.random() * 5
+        ) + 1;
 
 
-    // Mostrar consigna
-    document.getElementById("consigna").textContent =
-        "¿Cuál es mayor?";
+    numero2 =
+        Math.floor(
+            Math.random() * 5
+        ) + 1;
 
 
-    // Limpiar respuesta
-    document.getElementById("respuesta").value = "";
+    // Tipo de pregunta
 
-    document.getElementById("resultado").textContent = "";
+    const tipos = [
+        "mayor",
+        "menor",
+        "igual"
+    ];
 
 
-    // Llevar foco al campo
-    document.getElementById("respuesta").focus();
+    tipoPregunta =
+        tipos[
+            Math.floor(
+                Math.random() *
+                tipos.length
+            )
+        ];
+
+
+    // ==================================
+    // RESPUESTA CORRECTA
+    // ==================================
+
+    if (
+        tipoPregunta === "mayor"
+    ) {
+
+        respuestaCorrecta =
+            Math.max(
+                numero1,
+                numero2
+            ).toString();
+
+    }
+
+    else if (
+        tipoPregunta === "menor"
+    ) {
+
+        respuestaCorrecta =
+            Math.min(
+                numero1,
+                numero2
+            ).toString();
+
+    }
+
+    else {
+
+        respuestaCorrecta =
+            numero1 === numero2
+                ? "si"
+                : "no";
+
+    }
+
+
+    // ==================================
+    // MOSTRAR NÚMEROS
+    // ==================================
+
+    document
+        .getElementById("numeros")
+        .textContent =
+        numero1 +
+        "     " +
+        numero2;
+
+
+    // ==================================
+    // MOSTRAR CONSIGNA
+    // ==================================
+
+    const consigna =
+        document.getElementById(
+            "consigna"
+        );
+
+
+    if (
+        tipoPregunta === "mayor"
+    ) {
+
+        consigna.textContent =
+            "¿Cuál es mayor?";
+
+    }
+
+    else if (
+        tipoPregunta === "menor"
+    ) {
+
+        consigna.textContent =
+            "¿Cuál es menor?";
+
+    }
+
+    else {
+
+        consigna.textContent =
+            "¿Son iguales? Escribe sí o no.";
+
+    }
+
+
+    // ==================================
+    // LIMPIAR
+    // ==================================
+
+    document
+        .getElementById("respuesta")
+        .value = "";
+
+
+    document
+        .getElementById("resultado")
+        .textContent = "";
 
 
     actualizarBarra();
 
-    repetir();
+
+    document
+        .getElementById("respuesta")
+        .focus();
+
+
+    // ==================================
+    // LECTURA AUTOMÁTICA
+    // ==================================
+
+    setTimeout(
+        function () {
+
+            presentarPregunta();
+
+        },
+        700
+    );
 
 }
 
 
-// --------------------------------------
-// Repetir consigna
-// --------------------------------------
+// ======================================
+// PRESENTAR PREGUNTA
+// ======================================
 
-function repetir(){
+function presentarPregunta() {
 
-    limpiarVoz();
-
-    hablar("Escucha atentamente.");
-
-    setTimeout(function(){
-
-        hablar("Primer número.");
-
-    }, 700);
+    detenerVoz();
 
 
-    setTimeout(function(){
+    // Primero presentamos el contexto
 
-        hablar(numero1.toString());
-
-    }, 1400);
-
-
-    setTimeout(function(){
-
-        hablar("Segundo número.");
-
-    }, 2100);
+    decir(
+        "Nivel 3.4. Comparo números."
+    );
 
 
-    setTimeout(function(){
+    esperar(
+        1800,
+        function () {
 
-        hablar(numero2.toString());
+            decir(
+                "Escucha."
+            );
 
-    }, 2800);
+
+            esperar(
+                1200,
+                function () {
+
+                    decir(
+                        "Primer número: " +
+                        numeroEnPalabra(numero1)
+                    );
 
 
-    setTimeout(function(){
+                    esperar(
+                        1800,
+                        function () {
 
-        hablar("¿Cuál es mayor?");
+                            decir(
+                                "Segundo número: " +
+                                numeroEnPalabra(numero2)
+                            );
 
-    }, 3500);
+
+                            esperar(
+                                1800,
+                                function () {
+
+                                    decirConsigna();
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
 
-// --------------------------------------
-// Actualizar barra
-// --------------------------------------
+// ======================================
+// CONSIGNA
+// ======================================
 
-function actualizarBarra(){
+function decirConsigna() {
 
-    document.getElementById("pregunta").textContent =
+    let texto = "";
+
+
+    if (
+        tipoPregunta === "mayor"
+    ) {
+
+        texto =
+            "¿Cuál es mayor? " +
+            "Escribe el número mayor.";
+
+    }
+
+    else if (
+        tipoPregunta === "menor"
+    ) {
+
+        texto =
+            "¿Cuál es menor? " +
+            "Escribe el número menor.";
+
+    }
+
+    else {
+
+        texto =
+            "¿Son iguales? " +
+            "Escribe sí o no.";
+
+    }
+
+
+    decir(texto);
+
+
+    esperar(
+        1200,
+        function () {
+
+            decir(
+                "Presiona Enter para comprobar."
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================
+// DECIR
+// ======================================
+
+function decir(texto) {
+
+    detenerSoloTemporizador();
+
+
+    const voz =
+        new SpeechSynthesisUtterance(
+            texto
+        );
+
+
+    voz.lang = "es-ES";
+
+    // Muy lento
+
+    voz.rate = 0.45;
+
+    voz.pitch = 1;
+
+    voz.volume = 1;
+
+
+    window.speechSynthesis.speak(
+        voz
+    );
+
+}
+
+
+// ======================================
+// ESPERAR
+// ======================================
+
+function esperar(
+    tiempo,
+    funcion
+) {
+
+    detenerSoloTemporizador();
+
+
+    temporizadorNivel3 =
+        setTimeout(
+            funcion,
+            tiempo
+        );
+
+}
+
+
+// Variable propia del Nivel 3
+
+let temporizadorNivel3 = null;
+
+
+// ======================================
+// DETENER VOZ
+// ======================================
+
+function detenerVoz() {
+
+    if (
+        temporizadorNivel3 !== null
+    ) {
+
+        clearTimeout(
+            temporizadorNivel3
+        );
+
+        temporizadorNivel3 = null;
+
+    }
+
+
+    window.speechSynthesis.cancel();
+
+}
+
+
+// ======================================
+// DETENER SOLO TEMPORIZADOR
+// ======================================
+
+function detenerSoloTemporizador() {
+
+    if (
+        temporizadorNivel3 !== null
+    ) {
+
+        clearTimeout(
+            temporizadorNivel3
+        );
+
+        temporizadorNivel3 = null;
+
+    }
+
+}
+
+
+// ======================================
+// REPETIR
+// ======================================
+
+function repetir() {
+
+    presentarPregunta();
+
+}
+
+
+// ======================================
+// NÚMERO EN PALABRA
+// ======================================
+
+function numeroEnPalabra(numero) {
+
+    const palabras = [
+
+        "",
+
+        "uno",
+
+        "dos",
+
+        "tres",
+
+        "cuatro",
+
+        "cinco"
+
+    ];
+
+
+    return palabras[numero];
+
+}
+
+
+// ======================================
+// BARRA
+// ======================================
+
+function actualizarBarra() {
+
+    document
+        .getElementById("pregunta")
+        .textContent =
         "📘 Pregunta " +
         pregunta +
         " de " +
         totalPreguntas;
 
 
-    document.getElementById("barra").style.width =
-        (pregunta / totalPreguntas * 100) + "%";
+    document
+        .getElementById("barra")
+        .style.width =
+        (
+            pregunta /
+            totalPreguntas *
+            100
+        ) +
+        "%";
 
 }
 
 
-// --------------------------------------
-// Corregir respuesta
-// --------------------------------------
+// ======================================
+// CORREGIR
+// ======================================
 
-function corregir(){
+function corregir() {
+
+    detenerVoz();
+
 
     const respuesta =
-        document.getElementById("respuesta")
-        .value
-        .trim();
+        document
+            .getElementById("respuesta")
+            .value
+            .trim()
+            .toLowerCase();
 
 
-    if(respuesta === ""){
+    // ==================================
+    // SIN RESPUESTA
+    // ==================================
 
-        limpiarVoz();
+    if (
+        respuesta === ""
+    ) {
 
-        hablar("Escribe un número.");
+        decir(
+            "Escribe una respuesta."
+        );
 
         return;
 
     }
 
 
-    const usuario =
-        Number(respuesta);
+    let respuestaUsuario = "";
 
 
-    // ----------------------------------
-    // Respuesta correcta
-    // ----------------------------------
+    // ==================================
+    // IGUAL
+    // ==================================
 
-    if(usuario === respuestaCorrecta){
+    if (
+        tipoPregunta === "igual"
+    ) {
 
-        limpiarVoz();
+        if (
+            respuesta === "si" ||
+            respuesta === "sí"
+        ) {
 
-        hablar("Muy bien. Respuesta correcta.");
+            respuestaUsuario =
+                "si";
+
+        }
+
+        else if (
+            respuesta === "no"
+        ) {
+
+            respuestaUsuario =
+                "no";
+
+        }
+
+        else {
+
+            decir(
+                "Responde sí o no."
+            );
+
+            return;
+
+        }
+
+    }
 
 
-        document.getElementById("resultado")
-            .textContent =
-            "✅ Correcto";
+    // ==================================
+    // MAYOR / MENOR
+    // ==================================
 
+    else {
+
+        const numero =
+            Number(respuesta);
+
+
+        if (
+            Number.isNaN(numero)
+        ) {
+
+            decir(
+                "Escribe un número."
+            );
+
+            return;
+
+        }
+
+
+        respuestaUsuario =
+            numero.toString();
+
+    }
+
+
+    // ==================================
+    // CORRECTO
+    // ==================================
+
+    if (
+        respuestaUsuario ===
+        respuestaCorrecta
+    ) {
 
         aciertos++;
 
 
-        document.getElementById("aciertos")
+        document
+            .getElementById("resultado")
             .textContent =
-            "⭐ Aciertos: " + aciertos;
+            "✅ Correcto";
+
+
+        document
+            .getElementById("aciertos")
+            .textContent =
+            "⭐ Aciertos: " +
+            aciertos;
+
+
+        decir(
+            "Muy bien. " +
+            "Respuesta correcta."
+        );
 
     }
 
 
-    // ----------------------------------
-    // Respuesta incorrecta
-    // ----------------------------------
+    // ==================================
+    // INCORRECTO
+    // ==================================
 
-    else{
-
-        limpiarVoz();
-
-        hablar("Incorrecto. Intenta nuevamente.");
-
-
-        document.getElementById("resultado")
-            .textContent =
-            "❌ Incorrecto";
-
+    else {
 
         errores++;
 
 
-        document.getElementById("errores")
+        document
+            .getElementById("resultado")
             .textContent =
-            "❌ Errores: " + errores;
-
-    }
+            "❌ Incorrecto";
 
 
-    // ----------------------------------
-    // Final
-    // ----------------------------------
+        document
+            .getElementById("errores")
+            .textContent =
+            "❌ Errores: " +
+            errores;
 
-    if(pregunta >= totalPreguntas){
 
-        setTimeout(function(){
+        decir(
+            "Incorrecto. " +
+            "Intenta nuevamente."
+        );
 
-            terminarNivel();
-
-        }, 1500);
 
         return;
 
     }
 
 
-    // ----------------------------------
-    // Siguiente pregunta
-    // ----------------------------------
+    // ==================================
+    // FINAL
+    // ==================================
+
+    if (
+        pregunta >=
+        totalPreguntas
+    ) {
+
+        setTimeout(
+            terminarNivel,
+            1800
+        );
+
+
+        return;
+
+    }
+
+
+    // ==================================
+    // SIGUIENTE
+    // ==================================
 
     pregunta++;
 
 
-    setTimeout(function(){
-
-        nuevaPregunta();
-
-    }, 1800);
-
-}
+    guardarDato(
+        "ultimoNivel",
+        3
+    );
 
 
-// --------------------------------------
-// Final del nivel
-// --------------------------------------
-
-function terminarNivel(){
-
-    limpiarVoz();
-
-    hablar("Felicitaciones. Terminaste esta actividad.");
-
-
-    document.querySelector("main").innerHTML = `
-
-        <h1>🎉 ¡Muy bien!</h1>
-
-        <h2>Terminaste Nivel 3.1</h2>
-
-        <p>¿Cuál es mayor?</p>
-
-        <p>
-            ⭐ Aciertos: ${aciertos}
-        </p>
-
-        <p>
-            ❌ Errores: ${errores}
-        </p>
-
-        <br>
-
-        <button onclick="location.reload()">
-            🔄 Volver a jugar
-        </button>
-
-        <br><br>
-
-        <button onclick="window.location='index.html'">
-            🏠 Volver al menú principal
-        </button>
-
-    `;
+    setTimeout(
+        nuevaPregunta,
+        1800
+    );
 
 }
 
 
-// --------------------------------------
-// Volver al menú
-// --------------------------------------
+// ======================================
+// TERMINAR NIVEL
+// ======================================
 
-function volverMenu(){
+function terminarNivel() {
 
-    const salir =
-        confirm(
-            "¿Desea volver al menú principal?"
-        );
+    detenerVoz();
 
 
-    if(salir){
+    decir(
+        "Felicitaciones. " +
+        "Terminaste el Nivel 3.4. " +
+        "Comparo números. " +
+        "Tuviste " +
+        aciertos +
+        " aciertos de " +
+        totalPreguntas +
+        "."
+    );
 
-        limpiarVoz();
 
-        window.location.href =
-            "index.html";
+    document
+        .querySelector("main")
+        .innerHTML =
 
-    }
+        "<h1>🎉 ¡Muy bien!</h1>" +
+
+        "<h2>Terminaste Nivel 3.4</h2>" +
+
+        "<p>Comparo números</p>" +
+
+        "<p>⭐ Aciertos: " +
+        aciertos +
+        "</p>" +
+
+        "<p>❌ Errores: " +
+        errores +
+        "</p>" +
+
+        "<br>" +
+
+        "<button onclick=\"location.reload()\">" +
+
+        "🔄 Volver a jugar" +
+
+        "</button>" +
+
+        "<br><br>" +
+
+        "<button onclick=\"volverMenu()\">" +
+
+        "🏠 Volver al menú principal" +
+
+        "</button>";
 
 }
 
 
-// --------------------------------------
-// Enter
-// --------------------------------------
+// ======================================
+// VOLVER AL MENÚ
+// ======================================
 
-document
-    .getElementById("respuesta")
-    .addEventListener("keydown", function(e){
+function volverMenu() {
 
-        if(e.key === "Enter"){
+    detenerVoz();
 
-            e.preventDefault();
 
-            corregir();
+    window.location.href =
+        "index.html";
+
+}
+
+
+// ======================================
+// ENTER
+// ======================================
+
+document.addEventListener(
+    "keydown",
+    function (e) {
+
+        if (
+            e.key === "Enter"
+        ) {
+
+            const respuesta =
+                document.getElementById(
+                    "respuesta"
+                );
+
+
+            if (
+                respuesta &&
+                document.activeElement ===
+                respuesta
+            ) {
+
+                e.preventDefault();
+
+                corregir();
+
+            }
 
         }
 
-    });
-
-
-// --------------------------------------
-// Inicio
-// --------------------------------------
-
-actualizarBarra();
-
-nuevaPregunta();
+    }
+);
