@@ -211,7 +211,7 @@ function presentarPregunta() {
     // Primero presentamos el contexto
 
     decir(
-        "Nivel 3.4. Comparo números."
+        "Nivel 3. Comparo números."
     );
 
 
@@ -715,7 +715,7 @@ function terminarNivel() {
 
     decir(
         "Felicitaciones. " +
-        "Terminaste el Nivel 3.4. " +
+        "Terminaste el Nivel 3." +
         "Comparo números. " +
         "Tuviste " +
         aciertos +
