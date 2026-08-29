@@ -2,6 +2,7 @@
 // MateSonidos
 // Menú principal accesible
 // Teclado + mouse + celular
+// Primer borrador: Niveles 1, 2 y 3
 // ======================================
 
 document.addEventListener(
@@ -19,6 +20,10 @@ let opcion = 0;
 
 const opciones = [
 
+    // ----------------------------------
+    // NIVEL 1
+    // ----------------------------------
+
     {
         id: "nivel1",
 
@@ -34,6 +39,10 @@ const opciones = [
 
     },
 
+
+    // ----------------------------------
+    // NIVEL 2
+    // ----------------------------------
 
     {
         id: "nivel2",
@@ -51,6 +60,10 @@ const opciones = [
     },
 
 
+    // ----------------------------------
+    // NIVEL 3
+    // ----------------------------------
+
     {
         id: "nivel3",
 
@@ -67,25 +80,9 @@ const opciones = [
     },
 
 
-    {
-        id: "nivel4",
-
-        texto:
-            "Nivel 4. Número y cantidad.",
-
-        accion: function(){
-
-            // IMPORTANTE:
-            // Nivel 4 abre primero
-            // su submenú.
-
-            window.location.href =
-                "nivel4.html";
-
-        }
-
-    },
-
+    // ----------------------------------
+    // CONFIGURACIÓN
+    // ----------------------------------
 
     {
         id: "configuracion",
@@ -103,6 +100,10 @@ const opciones = [
 
     },
 
+
+    // ----------------------------------
+    // AYUDA
+    // ----------------------------------
 
     {
         id: "ayuda",
@@ -302,7 +303,9 @@ document.addEventListener(
         // FLECHA ABAJO
         // ------------------------------
 
-        if(e.key === "ArrowDown"){
+        if(
+            e.key === "ArrowDown"
+        ){
 
             e.preventDefault();
 
@@ -317,7 +320,9 @@ document.addEventListener(
         // FLECHA ARRIBA
         // ------------------------------
 
-        if(e.key === "ArrowUp"){
+        if(
+            e.key === "ArrowUp"
+        ){
 
             e.preventDefault();
 
@@ -332,7 +337,9 @@ document.addEventListener(
         // ESPACIO
         // ------------------------------
 
-        if(e.key === " "){
+        if(
+            e.key === " "
+        ){
 
             e.preventDefault();
 
@@ -347,7 +354,9 @@ document.addEventListener(
         // ENTER
         // ------------------------------
 
-        if(e.key === "Enter"){
+        if(
+            e.key === "Enter"
+        ){
 
             e.preventDefault();
 
