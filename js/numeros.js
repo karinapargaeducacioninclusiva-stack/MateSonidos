@@ -4,18 +4,27 @@
 // ===============================
 
 // Variables
+
 let numeroCorrecto;
+
 let pregunta = 1;
+
 let aciertos = 0;
+
 let errores = 0;
 
+
 // Lista de números del 1 al 10
+// Se mezclan al comenzar
+// y no se repiten durante la partida
+
 let numerosDisponibles = [];
 
 
-// -------------------------------
-// Voz
-// -------------------------------
+// ===============================
+// VOZ
+// ===============================
+
 function hablar(texto) {
 
     speechSynthesis.cancel();
@@ -25,8 +34,11 @@ function hablar(texto) {
 
     voz.lang = "es-ES";
 
-    // Velocidad accesible
-    voz.rate = 0.75;
+    // Velocidad lenta
+    // Pensada para facilitar
+    // la identificación auditiva
+
+    voz.rate = 0.50;
 
     voz.pitch = 1;
 
@@ -37,21 +49,37 @@ function hablar(texto) {
 }
 
 
-// -------------------------------
-// Crear lista 1 al 10
-// sin repetir
-// -------------------------------
+// ===============================
+// PREPARAR NÚMEROS
+// ===============================
+
 function prepararNumeros() {
 
     numerosDisponibles = [
-        1, 2, 3, 4, 5,
-        6, 7, 8, 9, 10
+
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+
     ];
 
-    // Mezclar la lista
+
+    // Mezclar los números
+    // sin eliminar ninguno
+
     for (
-        let i = numerosDisponibles.length - 1;
+        let i =
+            numerosDisponibles.length - 1;
+
         i > 0;
+
         i--
     ) {
 
@@ -60,12 +88,16 @@ function prepararNumeros() {
                 Math.random() * (i + 1)
             );
 
+
         [
             numerosDisponibles[i],
             numerosDisponibles[j]
+
         ] = [
+
             numerosDisponibles[j],
             numerosDisponibles[i]
+
         ];
 
     }
@@ -73,17 +105,19 @@ function prepararNumeros() {
 }
 
 
-// -------------------------------
-// Generar nuevo número
-// -------------------------------
+// ===============================
+// NUEVO NÚMERO
+// ===============================
+
 function nuevoNumero() {
 
-    // Tomar el siguiente número
-    // de la lista mezclada
-
     numeroCorrecto =
-        numerosDisponibles[pregunta - 1];
+        numerosDisponibles[
+            pregunta - 1
+        ];
 
+
+    // Mostrar número visualmente
 
     document
         .getElementById("numero")
@@ -91,20 +125,18 @@ function nuevoNumero() {
         numeroCorrecto;
 
 
-    hablar(
-        "Número: " +
-        numeroCorrecto +
-        ". ¿Qué número es?"
-    );
-
+    // Animación
 
     const circulo =
-        document.querySelector(".circulo");
+        document.querySelector(
+            ".circulo"
+        );
 
 
     if (circulo) {
 
-        circulo.style.animation = "none";
+        circulo.style.animation =
+            "none";
 
         circulo.offsetHeight;
 
@@ -114,39 +146,147 @@ function nuevoNumero() {
     }
 
 
+    // Limpiar respuesta
+
     document
         .getElementById("respuesta")
         .value = "";
 
 
+    // Limpiar resultado
+
+    document
+        .getElementById("resultado")
+        .textContent = "";
+
+
+    // Actualizar progreso
+
+    actualizarBarra();
+
+
+    // Llevar foco al campo
+
     document
         .getElementById("respuesta")
         .focus();
 
+
+    // Leer automáticamente
+
+    leerNumero();
+
 }
 
 
-// -------------------------------
-// Repetir consigna
-// -------------------------------
-function repetir() {
+// ===============================
+// LEER NÚMERO
+// ===============================
 
-    hablar(
-        "Número: " +
-        numeroCorrecto +
-        ". ¿Qué número es?"
+function leerNumero() {
+
+    speechSynthesis.cancel();
+
+
+    const vozNumero =
+        new SpeechSynthesisUtterance(
+            "Número: " +
+            numeroCorrecto +
+            "."
+        );
+
+
+    vozNumero.lang =
+        "es-ES";
+
+
+    // Muy lento y claro
+
+    vozNumero.rate =
+        0.50;
+
+
+    vozNumero.pitch =
+        1;
+
+
+    vozNumero.volume =
+        1;
+
+
+    // Cuando termina de decir
+    // el número, esperamos
+    // un segundo antes de
+    // hacer la pregunta.
+
+    vozNumero.onend =
+        function() {
+
+            setTimeout(
+                function() {
+
+                    const vozPregunta =
+                        new SpeechSynthesisUtterance(
+                            "¿Qué número es?"
+                        );
+
+
+                    vozPregunta.lang =
+                        "es-ES";
+
+
+                    vozPregunta.rate =
+                        0.50;
+
+
+                    vozPregunta.pitch =
+                        1;
+
+
+                    vozPregunta.volume =
+                        1;
+
+
+                    speechSynthesis.speak(
+                        vozPregunta
+                    );
+
+                },
+                1000
+            );
+
+        };
+
+
+    speechSynthesis.speak(
+        vozNumero
     );
 
 }
 
 
-// -------------------------------
-// Actualizar barra
-// -------------------------------
+// ===============================
+// REPETIR
+// ===============================
+
+function repetir() {
+
+    leerNumero();
+
+}
+
+
+// ===============================
+// ACTUALIZAR BARRA
+// ===============================
+
 function actualizarBarra() {
 
-    let porcentaje =
-        (pregunta / 10) * 100;
+    const porcentaje =
+        (
+            pregunta /
+            10
+        ) * 100;
 
 
     document
@@ -165,14 +305,21 @@ function actualizarBarra() {
 }
 
 
-// -------------------------------
-// Terminar juego
-// -------------------------------
+// ===============================
+// TERMINAR JUEGO
+// ===============================
+
 function terminarJuego() {
+
+    speechSynthesis.cancel();
+
 
     hablar(
         "Felicitaciones. " +
-        "Terminaste el Nivel 1."
+        "Terminaste el Nivel 1. " +
+        "Tuviste " +
+        aciertos +
+        " aciertos de 10."
     );
 
 
@@ -241,37 +388,46 @@ function terminarJuego() {
 }
 
 
-// -------------------------------
-// Corregir respuesta
-// -------------------------------
+// ===============================
+// CORREGIR RESPUESTA
+// ===============================
+
 function corregir() {
 
-    let respuesta =
+    const respuesta =
         document
             .getElementById("respuesta")
             .value
             .trim();
 
 
-    if (respuesta == "") {
+    // No escribió nada
+
+    if (respuesta === "") {
+
+        speechSynthesis.cancel();
+
 
         hablar(
             "Escribe un número."
         );
+
 
         return;
 
     }
 
 
+    // =============================
+    // RESPUESTA CORRECTA
+    // =============================
+
     if (
         Number(respuesta) ===
         numeroCorrecto
     ) {
 
-        hablar(
-            "Correcto."
-        );
+        aciertos++;
 
 
         document
@@ -280,22 +436,30 @@ function corregir() {
             "✅ ¡Correcto!";
 
 
-        aciertos++;
-
-
         document
             .getElementById("aciertos")
             .textContent =
             "⭐ Aciertos: " +
             aciertos;
 
+
+        speechSynthesis.cancel();
+
+
+        hablar(
+            "Correcto."
+        );
+
     }
+
+
+    // =============================
+    // RESPUESTA INCORRECTA
+    // =============================
 
     else {
 
-        hablar(
-            "Incorrecto."
-        );
+        errores++;
 
 
         document
@@ -304,38 +468,45 @@ function corregir() {
             "❌ Incorrecto";
 
 
-        errores++;
-
-
         document
             .getElementById("errores")
             .textContent =
             "❌ Errores: " +
             errores;
 
+
+        speechSynthesis.cancel();
+
+
+        hablar(
+            "Incorrecto."
+        );
+
     }
 
 
-    // ---------------------------
-    // Fin de las 10 preguntas
-    // ---------------------------
+    // =============================
+    // FIN DE LAS 10 PREGUNTAS
+    // =============================
 
     if (pregunta >= 10) {
 
         setTimeout(
             terminarJuego,
-            1200
+            1500
         );
+
 
         return;
 
     }
 
 
+    // =============================
+    // SIGUIENTE PREGUNTA
+    // =============================
+
     pregunta++;
-
-
-    actualizarBarra();
 
 
     guardarDato(
@@ -344,47 +515,64 @@ function corregir() {
     );
 
 
+    actualizarBarra();
+
+
     setTimeout(
         function() {
-
-            document
-                .getElementById("resultado")
-                .textContent = "";
-
 
             nuevoNumero();
 
         },
-        1200
+        1500
     );
 
 }
 
 
-// -------------------------------
-// Eventos
-// -------------------------------
-document
-    .getElementById("respuesta")
-    .addEventListener(
-        "keydown",
-        function(e) {
+// ===============================
+// ENTER PARA RESPONDER
+// ===============================
 
-            if (e.key === "Enter") {
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-                e.preventDefault();
+        const respuesta =
+            document.getElementById(
+                "respuesta"
+            );
 
-                corregir();
 
-            }
+        if (respuesta) {
+
+            respuesta.addEventListener(
+                "keydown",
+                function(e) {
+
+                    if (
+                        e.key === "Enter"
+                    ) {
+
+                        e.preventDefault();
+
+                        corregir();
+
+                    }
+
+                }
+            );
 
         }
-    );
+
+    }
+);
 
 
-// -------------------------------
-// Volver al menú
-// -------------------------------
+// ===============================
+// VOLVER AL MENÚ
+// ===============================
+
 function volverMenu() {
 
     const salir =
@@ -396,6 +584,9 @@ function volverMenu() {
 
     if (salir) {
 
+        speechSynthesis.cancel();
+
+
         window.location.href =
             "index.html";
 
@@ -404,16 +595,19 @@ function volverMenu() {
 }
 
 
-// -------------------------------
-// Inicio
-// -------------------------------
+// ===============================
+// INICIO
+// ===============================
 
-prepararNumeros();
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-actualizarBarra();
+        prepararNumeros();
 
-nuevoNumero();
+        actualizarBarra();
 
-document
-    .getElementById("respuesta")
-    .focus();
+        nuevoNumero();
+
+    }
+);
