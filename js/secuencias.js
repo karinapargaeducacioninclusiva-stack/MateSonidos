@@ -1,9 +1,8 @@
 // ======================================
 // MateSonidos - Nivel 2
 // Ordena los números
+// Sistema de voz accesible
 // ======================================
-
-// Variables
 
 let numeros = [];
 let ordenCorrecto = [];
@@ -15,15 +14,16 @@ let errores = 0;
 const totalPreguntas = 10;
 
 
-// --------------------------------------
-// Nueva secuencia
-// --------------------------------------
+// ======================================
+// NUEVA SECUENCIA
+// ======================================
 
 function nuevaSecuencia(){
 
     numeros = [];
 
-    // Generar 3 números diferentes del 1 al 9
+    // Generar 3 números diferentes
+    // del 1 al 9
 
     while(numeros.length < 3){
 
@@ -39,31 +39,33 @@ function nuevaSecuencia(){
     }
 
 
-    // Orden correcto: menor a mayor
-
+    // Orden correcto
     ordenCorrecto =
-        [...numeros].sort((a,b) => a-b);
+        [...numeros].sort(
+            (a,b) => a-b
+        );
 
 
-    // Mostrar los números en pantalla
+    // Mostrar visualmente
 
-    document.getElementById("numeros").textContent =
+    document
+        .getElementById("numeros")
+        .textContent =
         numeros.join(" - ");
 
 
     // Limpiar respuesta
 
-    document.getElementById("respuesta").value = "";
+    document
+        .getElementById("respuesta")
+        .value = "";
 
 
     // Limpiar resultado
 
-    document.getElementById("resultado").textContent = "";
-
-
-    // Llevar el foco al campo
-
-    document.getElementById("respuesta").focus();
+    document
+        .getElementById("resultado")
+        .textContent = "";
 
 
     // Actualizar progreso
@@ -71,82 +73,198 @@ function nuevaSecuencia(){
     actualizarBarra();
 
 
-    // Leer la consigna
+    // Llevar foco
 
-    repetir();
+    document
+        .getElementById("respuesta")
+        .focus();
+
+
+    // Leer automáticamente
+
+    setTimeout(
+        function(){
+
+            presentarSecuencia();
+
+        },
+        500
+    );
 
 }
 
 
-// --------------------------------------
-// Leer nuevamente
-// --------------------------------------
+// ======================================
+// PRESENTAR SECUENCIA
+// UNA SOLA VOZ
+// ======================================
 
-function repetir()function repetir(){
+function presentarSecuencia(){
 
     limpiarVoz();
 
-    // Primer número
-    hablar(
+
+    const texto =
+
+        "Nivel 2. Ordena los números. " +
+
+        "Voy a decir tres números, uno por vez. " +
+
         "Primer número: " +
-        numeros[0]
-    );
+        numeroEnPalabra(numeros[0]) +
+        ". " +
 
-    // Segundo número
-    setTimeout(function(){
+        "Segundo número: " +
+        numeroEnPalabra(numeros[1]) +
+        ". " +
 
-        hablar(
-            "Segundo número: " +
-            numeros[1]
-        );
+        "Tercer número: " +
+        numeroEnPalabra(numeros[2]) +
+        ". " +
 
-    }, 1800);
+        "Repaso. " +
 
-    // Tercer número
-    setTimeout(function(){
+        numeroEnPalabra(numeros[0]) +
+        ". " +
 
-        hablar(
-            "Tercer número: " +
-            numeros[2]
-        );
+        numeroEnPalabra(numeros[1]) +
+        ". " +
 
-    }, 3600);
+        numeroEnPalabra(numeros[2]) +
+        ". " +
 
-    // Consigna
-    setTimeout(function(){
+        "Ahora ordénalos de menor a mayor. " +
 
-        hablar(
-            "Ahora escribe los números " +
-            "de menor a mayor, " +
-            "separados por espacios."
-        );
+        "Escribe primero el número más pequeño. " +
 
-    }, 5400);
+        "Después escribe el número del medio. " +
+
+        "Por último, escribe el número más grande. " +
+
+        "Separa los números con espacios. " +
+
+        "Presiona Enter cuando termines.";
+
+
+    hablar(texto);
 
 }
 
-// --------------------------------------
-// Barra de progreso
-// --------------------------------------
+
+// ======================================
+// REPETIR TODA LA SECUENCIA
+// ======================================
+
+function repetir(){
+
+    presentarSecuencia();
+
+}
+
+
+// ======================================
+// ESCUCHAR UN NÚMERO INDIVIDUAL
+// ======================================
+
+function escucharNumero(posicion){
+
+    if(
+        numeros[posicion] === undefined
+    ){
+
+        return;
+
+    }
+
+
+    limpiarVoz();
+
+
+    const numero =
+        numeros[posicion];
+
+
+    const texto =
+
+        "Número " +
+        (posicion + 1) +
+        ": " +
+        numeroEnPalabra(numero) +
+        ".";
+
+
+    hablar(texto);
+
+}
+
+
+// ======================================
+// NÚMERO EN PALABRA
+// ======================================
+
+function numeroEnPalabra(numero){
+
+    const palabras = [
+
+        "",
+
+        "uno",
+
+        "dos",
+
+        "tres",
+
+        "cuatro",
+
+        "cinco",
+
+        "seis",
+
+        "siete",
+
+        "ocho",
+
+        "nueve"
+
+    ];
+
+
+    return palabras[numero];
+
+}
+
+
+// ======================================
+// BARRA DE PROGRESO
+// ======================================
 
 function actualizarBarra(){
 
-    document.getElementById("pregunta").textContent =
+    document
+        .getElementById("pregunta")
+        .textContent =
         "📘 Pregunta " +
         pregunta +
         " de " +
         totalPreguntas;
 
 
-    document.getElementById("barra").style.width =
-        (pregunta / totalPreguntas * 100) + "%";
+    document
+        .getElementById("barra")
+        .style.width =
+        (
+            pregunta /
+            totalPreguntas *
+            100
+        ) +
+        "%";
 
 }
 
 
-// --------------------------------------
-// Corregir
-// --------------------------------------
+// ======================================
+// CORREGIR
+// ======================================
 
 function corregir(){
 
@@ -157,8 +275,6 @@ function corregir(){
             .value
             .trim();
 
-
-    // No hay respuesta
 
     if(respuesta === ""){
 
@@ -173,8 +289,6 @@ function corregir(){
     }
 
 
-    // Convertir respuesta en números
-
     const usuario =
 
         respuesta
@@ -185,8 +299,6 @@ function corregir(){
     let correcto = true;
 
 
-    // Verificar cantidad
-
     if(usuario.length !== 3){
 
         correcto = false;
@@ -195,11 +307,16 @@ function corregir(){
 
     else{
 
-        // Verificar cada número
+        for(
+            let i = 0;
+            i < 3;
+            i++
+        ){
 
-        for(let i = 0; i < 3; i++){
-
-            if(usuario[i] !== ordenCorrecto[i]){
+            if(
+                usuario[i] !==
+                ordenCorrecto[i]
+            ){
 
                 correcto = false;
 
@@ -212,17 +329,13 @@ function corregir(){
     }
 
 
-    // ----------------------------------
-    // Respuesta correcta
-    // ----------------------------------
+    // ==================================
+    // CORRECTO
+    // ==================================
 
     if(correcto){
 
-        limpiarVoz();
-
-        hablar(
-            "Muy bien. Respuesta correcta."
-        );
+        aciertos++;
 
 
         document
@@ -231,28 +344,31 @@ function corregir(){
             "✅ Correcto";
 
 
-        aciertos++;
-
-
         document
             .getElementById("aciertos")
             .textContent =
-            "⭐ Aciertos: " + aciertos;
+            "⭐ Aciertos: " +
+            aciertos;
+
+
+        limpiarVoz();
+
+
+        hablar(
+            "Muy bien. " +
+            "Respuesta correcta."
+        );
 
     }
 
 
-    // ----------------------------------
-    // Respuesta incorrecta
-    // ----------------------------------
+    // ==================================
+    // INCORRECTO
+    // ==================================
 
     else{
 
-        limpiarVoz();
-
-        hablar(
-            "Incorrecto. Intenta nuevamente."
-        );
+        errores++;
 
 
         document
@@ -261,55 +377,66 @@ function corregir(){
             "❌ Incorrecto";
 
 
-        errores++;
-
-
         document
             .getElementById("errores")
             .textContent =
-            "❌ Errores: " + errores;
+            "❌ Errores: " +
+            errores;
 
-    }
+
+        limpiarVoz();
 
 
-    // ----------------------------------
-    // Final del nivel
-    // ----------------------------------
+        hablar(
+            "Incorrecto. " +
+            "Intenta nuevamente."
+        );
 
-    if(pregunta >= totalPreguntas){
-
-        setTimeout(function(){
-
-            terminarJuego();
-
-        }, 1500);
 
         return;
 
     }
 
 
-    // ----------------------------------
-    // Siguiente pregunta
-    // ----------------------------------
+    // ==================================
+    // FINAL
+    // ==================================
+
+    if(
+        pregunta >=
+        totalPreguntas
+    ){
+
+        setTimeout(
+            terminarJuego,
+            1800
+        );
+
+        return;
+
+    }
+
 
     pregunta++;
 
-    guardarDato("ultimoNivel", 2);
+
+    guardarDato(
+        "ultimoNivel",
+        2
+    );
 
 
-    setTimeout(function(){
-
-        nuevaSecuencia();
-
-    }, 1500);
+    setTimeout(
+        nuevaSecuencia,
+        1800
+    );
 
 }
 
 
-// --------------------------------------
-// Final
-// --------------------------------------
+// ======================================
+// FINAL DEL NIVEL
+// ======================================
 
 function terminarJuego(){
 
@@ -317,11 +444,19 @@ function terminarJuego(){
 
 
     hablar(
-        "Felicitaciones. Terminaste el Nivel 2."
+        "Felicitaciones. " +
+        "Terminaste el Nivel 2. " +
+        "Tuviste " +
+        aciertos +
+        " aciertos de " +
+        totalPreguntas +
+        "."
     );
 
 
-    document.querySelector("main").innerHTML = `
+    document
+        .querySelector("main")
+        .innerHTML = `
 
         <h1>🎉 ¡Felicitaciones!</h1>
 
@@ -352,16 +487,17 @@ function terminarJuego(){
 }
 
 
-// --------------------------------------
-// Volver al menú
-// --------------------------------------
+// ======================================
+// VOLVER AL MENÚ
+// ======================================
 
 function volverMenu(){
 
-    const salir = confirm(
-        "¿Desea volver al menú principal?\n\n" +
-        "Se perderá el progreso de esta partida."
-    );
+    const salir =
+        confirm(
+            "¿Desea volver al menú principal?\n\n" +
+            "Se perderá el progreso de esta partida."
+        );
 
 
     if(salir){
@@ -376,32 +512,117 @@ function volverMenu(){
 }
 
 
-// --------------------------------------
-// Enter para comprobar
-// --------------------------------------
+// ======================================
+// TECLADO
+// ======================================
 
-document
-    .getElementById("respuesta")
-    .addEventListener(
-        "keydown",
-        function(e){
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-            if(e.key === "Enter"){
+        const respuesta =
+            document.getElementById(
+                "respuesta"
+            );
+
+
+        if(respuesta){
+
+            respuesta.addEventListener(
+                "keydown",
+                function(e){
+
+                    if(e.key === "Enter"){
+
+                        e.preventDefault();
+
+                        corregir();
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+// ======================================
+// ATAJOS ACCESIBLES
+// ======================================
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        const respuesta =
+            document.getElementById(
+                "respuesta"
+            );
+
+
+        // Espacio:
+        // repetir toda la secuencia
+
+        if(e.key === " "){
+
+            if(
+                document.activeElement !==
+                respuesta
+            ){
 
                 e.preventDefault();
 
-                corregir();
+                repetir();
 
             }
 
         }
-    );
 
 
-// --------------------------------------
-// Inicio
-// --------------------------------------
+        // 1 = primer número
 
-actualizarBarra();
+        if(e.key === "1"){
 
-nuevaSecuencia();
+            escucharNumero(0);
+
+        }
+
+
+        // 2 = segundo número
+
+        if(e.key === "2"){
+
+            escucharNumero(1);
+
+        }
+
+
+        // 3 = tercer número
+
+        if(e.key === "3"){
+
+            escucharNumero(2);
+
+        }
+
+    }
+);
+
+
+// ======================================
+// INICIO
+// ======================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        actualizarBarra();
+
+        nuevaSecuencia();
+
+    }
+);
