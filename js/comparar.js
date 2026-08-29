@@ -15,7 +15,7 @@ let pregunta = 1;
 let aciertos = 0;
 let errores = 0;
 
-const totalPreguntas = 5;
+const totalPreguntas = 10;
 
 
 // ======================================
